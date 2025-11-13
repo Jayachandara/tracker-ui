@@ -2,8 +2,8 @@ import { Dispatch, ReactElement, SetStateAction, useRef } from 'react';
 import { Button, Divider, Stack, Typography, useTheme } from '@mui/material';
 import EChartsReactCore from 'echarts-for-react/lib/core';
 import ExpensesChart from './ExpensesChart';
-import { SpendCategoryGroupDTO, SpendDTO, SpendsGroupDTO } from 'dtos/transactions-dtos';
-import { currencyFormat } from 'helpers/format-functions';
+import { SpendCategoryGroupDTO, SpendDTO, SpendsGroupDTO } from 'domain/transactions/types';
+import { currencyFormat } from 'core/utils/format-functions';
 
 type ExpensesProps = {
   spends: SpendDTO[];

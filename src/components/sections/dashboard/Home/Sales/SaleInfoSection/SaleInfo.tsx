@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
 import Image from 'components/base/Image';
-import { currencyFormat } from 'helpers/format-functions';
+import { currencyFormat } from 'core/utils/format-functions';
 
 type SaleInfoProps = {
   image?: string;

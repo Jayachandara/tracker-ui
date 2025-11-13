@@ -15,7 +15,7 @@ import { DataGrid, GridApi, GridColDef, GridSlots, useGridApiRef } from '@mui/x-
 import IconifyIcon from 'components/base/IconifyIcon';
 import { DataRow, rows } from 'data/products';
 import CustomPagination from './CustomPagination';
-import { currencyFormat } from 'helpers/format-functions';
+import { currencyFormat } from 'core/utils/format-functions';
 
 const columns: GridColDef<DataRow>[] = [
   {

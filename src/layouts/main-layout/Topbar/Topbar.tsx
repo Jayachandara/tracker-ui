@@ -14,7 +14,7 @@ import IconifyIcon from 'components/base/IconifyIcon';
 import { drawerWidth } from 'layouts/main-layout';
 
 import { useLocation } from 'react-router-dom';
-import capitalizePathname from 'helpers/capitalize-pathname';
+import { capitalizePathname } from 'core/utils/format-functions';
 import AccountDropdown from './AccountDropdown';
 import LanguageDropdown from './LanguageDropdown';
 import Image from 'components/base/Image';

@@ -5,7 +5,7 @@ import EChartsReactCore from 'echarts-for-react/lib/core';
 import { PieDataItemOption } from 'echarts/types/src/chart/pie/PieSeries.js';
 import { useMemo } from 'react';
 import { EChartsOption } from 'echarts-for-react';
-import { SpendDTO } from 'dtos/transactions-dtos';
+import { SpendDTO } from 'domain/transactions/types';
 
 type ExpensesChartProps = {
   chartRef: React.MutableRefObject<EChartsReactCore | null>;
