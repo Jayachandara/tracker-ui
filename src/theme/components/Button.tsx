@@ -1,12 +1,12 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const Button: Components<Omit<Theme, 'components'>>['MuiButton'] = {
   defaultProps: {
     size: 'medium',
   },
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       fontSize: theme.typography.body1.fontSize,
       fontWeight: theme.typography.body1.fontWeight,
       paddingTop: theme.spacing(1.5),
@@ -15,7 +15,7 @@ const Button: Components<Omit<Theme, 'components'>>['MuiButton'] = {
       textAlign: 'center',
       letterSpacing: 0,
     }),
-    text: ({ theme }) => ({
+    text: ({ theme }: any) => ({
       color: theme.palette.primary.main,
       padding: theme.spacing(1.5, 2),
       borderRadius: 0,
@@ -23,21 +23,21 @@ const Button: Components<Omit<Theme, 'components'>>['MuiButton'] = {
         backgroundColor: 'transparent',
       },
     }),
-    outlined: ({ theme }) => ({
+    outlined: ({ theme }: any) => ({
       border: 1,
       borderStyle: 'solid',
       borderRadius: theme.shape.borderRadius * 7.5,
     }),
-    sizeSmall: ({ theme }) => ({
+    sizeSmall: ({ theme }: any) => ({
       padding: theme.spacing(0.75, 3.375),
     }),
-    sizeLarge: ({ theme }) => ({
+    sizeLarge: ({ theme }: any) => ({
       padding: theme.spacing(1.5, 7.75),
     }),
-    outlinedSizeLarge: ({ theme }) => ({
+    outlinedSizeLarge: ({ theme }: any) => ({
       padding: theme.spacing(1.5, 7.75),
     }),
-    contained: ({ theme }) => ({
+    contained: ({ theme }: any) => ({
       backgroundColor: theme.palette.primary.main,
       borderRadius: theme.shape.borderRadius * 7.5,
       boxShadow: theme.shadows[0],
@@ -46,36 +46,36 @@ const Button: Components<Omit<Theme, 'components'>>['MuiButton'] = {
         boxShadow: theme.shadows[0],
       },
     }),
-    containedSizeLarge: ({ theme }) => ({
+    containedSizeLarge: ({ theme }: any) => ({
       padding: theme.spacing(1.5, 7.75),
     }),
-    icon: ({ theme }) => ({
+    icon: ({ theme }: any) => ({
       paddingTop: theme.spacing(0.75),
       paddingBottom: theme.spacing(0.75),
     }),
-    fullWidth: ({ theme }) => ({
+    fullWidth: ({ theme }: any) => ({
       paddingTop: theme.spacing(1.5),
       paddingBottom: theme.spacing(1.5),
     }),
     disabled: () => ({
       cursor: 'not-allowed',
     }),
-    containedSecondary: ({ theme }) => ({
+    containedSecondary: ({ theme }: any) => ({
       backgroundColor: theme.palette.secondary.main,
     }),
-    textSecondary: ({ theme }) => ({
+    textSecondary: ({ theme }: any) => ({
       color: theme.palette.secondary.main,
     }),
-    containedInfo: ({ theme }) => ({
+    containedInfo: ({ theme }: any) => ({
       backgroundColor: theme.palette.info.main,
     }),
-    textInfo: ({ theme }) => ({
+    textInfo: ({ theme }: any) => ({
       color: theme.palette.info.main,
     }),
-    containedError: ({ theme }) => ({
+    containedError: ({ theme }: any) => ({
       backgroundColor: theme.palette.error.main,
     }),
-    textError: ({ theme }) => ({
+    textError: ({ theme }: any) => ({
       color: theme.palette.error.main,
     }),
   },

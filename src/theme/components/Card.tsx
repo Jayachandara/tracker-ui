@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const Card: Components<Omit<Theme, 'components'>>['MuiCard'] = {
   defaultProps: {},
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       height: 'min-content',
       padding: theme.spacing(2.5),
       borderRadius: theme.shape.borderRadius * 5,

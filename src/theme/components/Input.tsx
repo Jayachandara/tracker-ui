@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const Input: Components<Omit<Theme, 'components'>>['MuiInput'] = {
   defaultProps: {},
   styleOverrides: {
-    input: ({ theme }) => ({
+    input: ({ theme }: any) => ({
       '&::placeholder': {
         fontFamily: theme.typography.body1.fontFamily,
       },
