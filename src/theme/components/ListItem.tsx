@@ -1,12 +1,12 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const ListItem: Components<Omit<Theme, 'components'>>['MuiListItem'] = {
   defaultProps: {
     disablePadding: true,
   },
   styleOverrides: {
-    root: ({}) => ({
+    root: ({ theme }: any) => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'start',
