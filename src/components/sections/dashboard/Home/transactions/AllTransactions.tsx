@@ -2,6 +2,7 @@ import { AppBar, Box, Grid, IconButton, Stack, Typography, useTheme } from "@mui
 import SimpleBar from 'simplebar-react';
 import IconifyIcon from "components/base/IconifyIcon";
 import { useState, useEffect, useRef } from "react";
+import { useScrollbar } from 'providers/ScrollbarProvider.tsx';
 import Transactions from "./Transactions";
 import StyledTabs from "components/ui/StyledTabs";
 import StyledTab from "components/ui/StyledTab";
@@ -94,6 +95,7 @@ interface TabPanelProps {
 
 const TabPanel = (props: TabPanelProps) => {
     const { children, value, index, ...other } = props;
+    const { showScrollbar: globalShow } = useScrollbar();
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
 
@@ -121,7 +123,10 @@ const TabPanel = (props: TabPanelProps) => {
         >
             {value === index && (
                 <Box sx={{ p: 1 }}>
-                    <SimpleBar style={{ maxHeight: maxHeight ? `${maxHeight}px` : '65vh' }}>
+                    <SimpleBar
+                        className={!globalShow ? 'simplebar-hidden-scrollbar' : undefined}
+                        style={{ maxHeight: maxHeight ? `${maxHeight}px` : '65vh' }}
+                    >
                         <Box sx={{ p: 1.5 }}>{children}</Box>
                     </SimpleBar>
                 </Box>

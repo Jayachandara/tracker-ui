@@ -34,3 +34,15 @@ html {
 .simplebar-content {
   padding-right: 12px;
 }
+
+/* When applied to the SimpleBar wrapper, hide the visible scrollbar but keep scrolling enabled */
+.simplebar-hidden-scrollbar .simplebar-scrollbar {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+.simplebar-hidden-scrollbar .simplebar-track {
+  background: transparent !important;
+}
+.simplebar-hidden-scrollbar .simplebar-scrollbar:before {
+  background: transparent !important;
+}
