@@ -1,0 +1,111 @@
+import { AppBar, Box, Button, ButtonGroup, Grid, Icon, IconButton, InputAdornment, Stack, styled, Tab, Tabs, TextField, Typography, useTheme } from "@mui/material";
+import IconifyIcon from "components/base/IconifyIcon";
+import { useState } from "react";
+import Transactions from "./Transactions";
+import StyledTabs from "components/ui/StyledTabs";
+import StyledTab from "components/ui/StyledTab";
+
+const MonthlyTracking = () => {
+
+    const theme = useTheme();
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
+
+    return (
+        <Stack
+            bgcolor="background.paper"
+            borderRadius={5}
+            width={1}
+            boxShadow={(theme) => theme.shadows[4]}
+            height={1}
+        >
+            <Stack
+                direction={{ sm: 'row' }}
+                justifyContent="space-between"
+                alignItems="center"
+                padding={2}
+                gap={3}
+            >
+                <Typography paddingLeft={1} variant="h6" color="text.primary">
+                    Monthly Tracking
+                </Typography>
+                <Grid>
+                    <Stack alignItems="center"
+                        direction={{ sm: 'row' }}>
+
+                        <Typography variant="subtitle1" color={'grey'}>Nov</Typography>
+                        <IconButton color="inherit"
+                            sx={{
+                                width: 40,
+                                height: 40,
+                                p: 1,
+                                bgcolor: 'inherit',
+                            }}
+                        >
+                            <IconifyIcon color={'gray'} icon="mdi:filter" />
+                        </IconButton>
+                    </Stack>
+                </Grid>
+
+            </Stack>
+
+            <Box >
+                <AppBar position="static" sx={{ padding: '5px 25px', backgroundColor: '#fff' }}>
+                    <StyledTabs
+                        variant="fullWidth"
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="styled tabs example"
+                    >
+                        <StyledTab label="Transactions" />
+                        <StyledTab label="Categories" />
+                        <StyledTab label="Merchants" />
+                    </StyledTabs>
+                </AppBar>
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                    <Transactions />
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                    Item Two
+                </TabPanel>
+                <TabPanel value={value} index={2} dir={theme.direction}>
+                    Item Three
+                </TabPanel>
+            </Box>
+        </Stack>
+    )
+
+}
+
+
+export default MonthlyTracking;
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    dir?: string;
+    index: number;
+    value: number;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
