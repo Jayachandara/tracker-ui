@@ -32,6 +32,7 @@ const Dashboard = lazy(async () => {
   ]).then(([moduleExports]) => moduleExports);
 });
 
+
 const Login = lazy(async () => import('pages/authentication/Login'));
 const SignUp = lazy(async () => import('pages/authentication/SignUp'));
 

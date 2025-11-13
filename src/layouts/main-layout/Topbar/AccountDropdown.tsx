@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { MouseEvent, ReactElement, useState } from 'react';
+import { useSettingsDrawer } from 'providers/SettingsDrawerProvider.tsx';
 import profile from 'assets/profile/profile.jpg';
 
 const AccountDropdown = (): ReactElement => {
@@ -22,6 +23,7 @@ const AccountDropdown = (): ReactElement => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const { openSettings } = useSettingsDrawer();
   return (
     <>
       <Button
@@ -100,7 +102,7 @@ const AccountDropdown = (): ReactElement => {
             Profile
           </ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => { handleClose(); openSettings(); }}>
           <ListItemIcon>
             <IconifyIcon icon="material-symbols:settings" />
           </ListItemIcon>

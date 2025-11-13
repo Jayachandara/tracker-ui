@@ -11,7 +11,25 @@ const ScrollbarContext = createContext<ScrollbarContextValue>({
 });
 
 export const ScrollbarProvider = ({ children }: { children: ReactNode }) => {
-  const [showScrollbar, setShowScrollbar] = useState<boolean>(true);
+  const storageKey = 'tracker.showScrollbar';
+  const [showScrollbar, setShowScrollbar] = useState<boolean>(() => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      return raw === null ? true : raw === 'true';
+    } catch (e) {
+      return true;
+    }
+  });
+
+  // persist changes
+  React.useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, showScrollbar ? 'true' : 'false');
+    } catch (e) {
+      // ignore
+    }
+  }, [showScrollbar]);
+
   return (
     <ScrollbarContext.Provider value={{ showScrollbar, setShowScrollbar }}>
       {children}
