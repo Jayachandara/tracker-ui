@@ -1,6 +1,6 @@
-import { TransactionDTO } from "dtos/transactions-dtos";
+import { TransactionDTO } from "domain/transactions/types";
 
-export const trans:TransactionDTO[] =  [
+export const trans: TransactionDTO[] = [
   {
     "date": "2025-11-01T00:00:00",
     "time": "06:08:00",
