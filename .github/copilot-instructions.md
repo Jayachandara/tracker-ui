@@ -1,4 +1,4 @@
-<!-- Copilot instructions for the tracker-ui (Elegent) project -->
+<!-- Copilot instructions for the tracker-ui (Tracker) project -->
 
 Purpose
 - Help AI coding assistants be immediately productive in this codebase: what to change, where to look, and how to run it.
@@ -6,11 +6,11 @@ Purpose
 Big picture
 - This is a Vite + React + TypeScript dashboard scaffold using Material UI and ECharts.
 - Entry point: `src/main.tsx` mounts `ThemeProvider` -> `BreakpointsProvider` -> `RouterProvider`.
-- Routing is client-side (`react-router-dom`) with a `basename` of `/elegent` (see `src/routes/router.tsx` and `vite.config.ts`).
+-- Routing is client-side (`react-router-dom`) with a `basename` of `/tracker` (see `src/routes/router.tsx` and `vite.config.ts`).
 
 Where to start (key files)
 - `src/main.tsx` — app bootstrapping and global providers.
-- `src/routes/router.tsx` & `src/routes/paths.ts` — route structure and `basename` (`/elegent`).
+- `src/routes/router.tsx` & `src/routes/paths.ts` — route structure and `basename` (`/tracker`).
 - `src/layouts/main-layout` and `src/layouts/auth-layout` — global page shells (topbar, sidebar, footer).
 - `src/theme/*` — all theme tokens and component overrides. See `src/theme/theme.ts` and per-component overrides under `src/theme/components` (example: `Button.tsx`).
 - `src/components/sections/*` — feature pages and micro UI pieces organized by section (dashboard, transactions, etc.).
@@ -24,14 +24,14 @@ Conventions & patterns
 
 Build / run / lint
 - Install: `npm install` (or `yarn`).
-- Dev server: `npm run dev` — Vite server configured to `port: 3000` and `base: '/elegent'`. Open `http://localhost:3000/elegent`.
+- Dev server: `npm run dev` — Vite server configured to `port: 3000` and `base: '/tracker'`. Open `http://localhost:3000/tracker`.
 - Build: `npm run build` (runs `tsc && vite build`).
 - Preview: `npm run preview` (serves built `dist`).
 - Lint: `npm run lint` (ESLint with TypeScript rules).
 - Deploy: `npm run deploy` (uses `gh-pages -d dist`, see `predeploy` script that copies `index.html` to `404.html`).
 
 Debugging & common gotchas
-- Router basename: during development use the `base` path — routes are registered under `/elegent`. If you get 404s locally, verify you opened `http://localhost:3000/elegent`.
+- Router basename: during development use the `base` path — routes are registered under `/tracker`. If you get 404s locally, verify you opened `http://localhost:3000/tracker`.
 - Vite server config: `vite.config.ts` sets `server.port` to `3000` and `preview.port` to `5000` — tests / scripts referencing other ports may be out of date.
 - TypeScript path aliases depend on `vite-tsconfig-paths`; editing `tsconfig.json` paths requires plugin-consideration.
 
@@ -49,7 +49,7 @@ Data and fixtures
 
 Examples (quick links)
 - Change button styles: `src/theme/components/Button.tsx` -> registered in `src/theme/theme.ts`.
-- Root router and basename: `src/routes/router.tsx` and `vite.config.ts` (look for `base: '/elegent'`).
+- Root router and basename: `src/routes/router.tsx` and `vite.config.ts` (look for `base: '/tracker'`).
 - App bootstrap: `src/main.tsx`.
 
 If something is missing

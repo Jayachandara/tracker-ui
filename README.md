@@ -49,7 +49,7 @@ Start the development server (Vite):
 npm run dev
 ```
 
-Open your browser at: `http://localhost:3000/elegent` — the router uses a `basename` of `/elegent` (see `vite.config.ts` and `src/routes/router.tsx`).
+Open your browser at: `http://localhost:3000/tracker` — the router uses a `basename` of `/tracker` (see `vite.config.ts` and `src/routes/router.tsx`).
 
 ### Build & Preview
 
@@ -69,7 +69,7 @@ npm run deploy
 
 ## Project structure & key files
 - `src/main.tsx` — app bootstrap; mounts `ThemeProvider`, `BreakpointsProvider`, `RouterProvider`.
-- `src/routes/router.tsx` & `src/routes/paths.ts` — routing configuration and `basename` (`/elegent`).
+- `src/routes/router.tsx` & `src/routes/paths.ts` — routing configuration and `basename` (`/tracker`).
 - `src/layouts/main-layout` & `src/layouts/auth-layout` — global shells (topbar, sidebar, footer).
 - `src/theme/*` — theme tokens and MUI component overrides. Register per-component overrides in `src/theme/theme.ts` (example: `src/theme/components/Button.tsx`).
 - `src/components/sections/*` — feature pages and section components (dashboard, transactions, etc.).
@@ -79,7 +79,7 @@ npm run deploy
 - Path aliases are used (imports like `import router from 'routes/router.tsx'`) — `vite-tsconfig-paths` is enabled in `vite.config.ts`.
 - Theme customization: edit tokens in `src/theme/palette.ts`, `src/theme/typography.ts`, and `src/theme/shadows.ts`; override components in `src/theme/components` and register them in `src/theme/theme.ts`.
 - Lazy loading: `React.lazy` + `Suspense` is used in `src/routes/router.tsx` with small artificial delays; follow this pattern for large routes.
-- Router basename: the app expects to run at `/elegent`. When testing locally, open `http://localhost:3000/elegent` to avoid 404s.
+- Router basename: the app expects to run at `/tracker`. When testing locally, open `http://localhost:3000/tracker` to avoid 404s.
 
 ## License
 

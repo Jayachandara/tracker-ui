@@ -98,6 +98,6 @@ const routes: RouteObject[] = [
   },
 ];
 
-const router = createBrowserRouter(routes, { basename: '/elegent' });
+const router = createBrowserRouter(routes, { basename: '/tracker' });
 
 export default router;
