@@ -1,16 +1,12 @@
-import Grid from '@mui/material/Unstable_Grid2';
-import { Stack } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { ReactElement } from 'react';
 
-import TransactionRecords from 'components/sections/dashboard/Home/Sales/TopSellingProduct/TransactionRecords';
 import ExpensesGraph from 'components/sections/dashboard/Home/Sales/Expenses/Expenses';
 import SaleInfoCards from 'components/sections/dashboard/Home/Sales/SaleInfoSection/SaleInfoCards';
-import BuyersProfile from 'components/sections/dashboard/Home/Sales/BuyersProfile/BuyersProfile';
-import NewCustomers from 'components/sections/dashboard/Home/Sales/NewCustomers/NewCustomers';
 import OverView from 'components/sections/dashboard/Home/Sales/OverView/OverView';
 
 import { drawerWidth } from 'layouts/main-layout';
-import MonthlyTracking from 'components/sections/dashboard/Home/MonthlyTracking/MonthlyTracking';
+import MonthlyTracking from 'components/sections/dashboard/Home/transactions/AllTransactions';
 
 const Dashboard = (): ReactElement => {
   return (
@@ -27,18 +23,18 @@ const Dashboard = (): ReactElement => {
         pl: { xs: 3.75, lg: 0 },
       }}
     >
-      <Grid xs={12} lg={3.5}>
+      <Grid size={3.5}>
         <MonthlyTracking />
         {/* <TransactionRecords/> */}
       </Grid>
-      <Grid xs={12} lg={4.5} >
+      <Grid size={4.5} >
          <Stack direction={{ sm: 'column' }} gap={3.75}>
             <ExpensesGraph />
             <OverView />
           </Stack>
       </Grid>
 
-       <Grid xs={12} md={2.5}>
+       <Grid size={2.5}>
          <SaleInfoCards />
       </Grid>
       
