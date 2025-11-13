@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { User } from 'domain/users/types';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+import { mockUsersService } from './mock/users-service';
 
 interface UsersListResponse {
   items: User[];
@@ -19,44 +18,46 @@ interface UserFilters {
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_BASE_URL}/users`,
-    credentials: 'include',
-  }),
+  baseQuery: fakeBaseQuery(),
   tagTypes: ['Users'],
   endpoints: (builder) => ({
     getUsers: builder.query<UsersListResponse, UserFilters>({
-      query: (filters) => ({
-        url: '/list',
-        params: filters,
-      }),
+      queryFn: (filters) => {
+        const data = mockUsersService.getUsers(filters);
+        return { data };
+      },
       providesTags: ['Users'],
     }),
 
     getUserById: builder.query<{ data: User }, string>({
-      query: (id) => `/${id}`,
+      queryFn: (id) => {
+        const data = mockUsersService.getUserById(id);
+        return { data: { data } };
+      },
       providesTags: (_, __, id) => [{ type: 'Users', id }],
     }),
 
     getCurrentUser: builder.query<{ data: User }, void>({
-      query: () => '/me',
+      queryFn: () => {
+        const data = mockUsersService.getCurrentUser();
+        return { data: { data } };
+      },
       providesTags: ['Users'],
     }),
 
     updateUser: builder.mutation<{ data: User }, { id: string; data: Partial<User> }>({
-      query: ({ id, data }) => ({
-        url: `/${id}`,
-        method: 'PATCH',
-        body: data,
-      }),
+      queryFn: ({ id, data }) => {
+        const result = mockUsersService.updateUser(id, data);
+        return { data: { data: result } };
+      },
       invalidatesTags: (_, __, { id }) => [{ type: 'Users', id }, 'Users'],
     }),
 
     deleteUser: builder.mutation<{ success: boolean }, string>({
-      query: (id) => ({
-        url: `/${id}`,
-        method: 'DELETE',
-      }),
+      queryFn: (id) => {
+        const data = mockUsersService.deleteUser(id);
+        return { data };
+      },
       invalidatesTags: ['Users'],
     }),
   }),

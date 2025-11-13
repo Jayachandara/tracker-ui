@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import type {
   TransactionFilters,
   TransactionsListResponse,
@@ -7,55 +7,49 @@ import type {
   CreateTransactionDTO,
   UpdateTransactionDTO,
 } from 'domain/transactions/types';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+import { mockTransactionsService } from './mock/transactions-service';
 
 export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_BASE_URL}/transactions`,
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }),
+  baseQuery: fakeBaseQuery(),
   tagTypes: ['Transactions', 'TransactionStats'],
   endpoints: (builder) => ({
     // Get list of transactions with pagination and filters
-    getTransactions: builder.query<TransactionsListResponse, TransactionFilters & { page?: number; pageSize?: number }>({
-      query: (filters) => ({
-        url: '/list',
-        method: 'GET',
-        params: filters,
-      }),
+    getTransactions: builder.query<
+      TransactionsListResponse,
+      TransactionFilters & { page?: number; pageSize?: number }
+    >({
+      queryFn: (filters) => {
+        const data = mockTransactionsService.getTransactions(filters);
+        return { data };
+      },
       providesTags: ['Transactions'],
     }),
 
     // Get single transaction by ID
     getTransactionById: builder.query<TransactionDetailResponse, string>({
-      query: (id) => ({
-        url: `/${id}`,
-        method: 'GET',
-      }),
+      queryFn: (id) => {
+        const data = mockTransactionsService.getTransactionById(id);
+        return { data: { success: true, data } };
+      },
       providesTags: (_, __, id) => [{ type: 'Transactions', id }],
     }),
 
     // Get transaction statistics
     getTransactionStats: builder.query<TransactionStatsResponse, void>({
-      query: () => ({
-        url: '/stats',
-        method: 'GET',
-      }),
+      queryFn: () => {
+        const data = mockTransactionsService.getStats();
+        return { data: { success: true, data } };
+      },
       providesTags: ['TransactionStats'],
     }),
 
     // Create new transaction
     createTransaction: builder.mutation<TransactionDetailResponse, CreateTransactionDTO>({
-      query: (data) => ({
-        url: '/create',
-        method: 'POST',
-        body: data,
-      }),
+      queryFn: (data) => {
+        const result = mockTransactionsService.createTransaction(data);
+        return { data: { success: true, data: result } };
+      },
       invalidatesTags: ['Transactions', 'TransactionStats'],
     }),
 
@@ -64,11 +58,10 @@ export const transactionsApi = createApi({
       TransactionDetailResponse,
       { id: string; data: UpdateTransactionDTO }
     >({
-      query: ({ id, data }) => ({
-        url: `/${id}`,
-        method: 'PATCH',
-        body: data,
-      }),
+      queryFn: ({ id, data }) => {
+        const result = mockTransactionsService.updateTransaction(id, data);
+        return { data: { success: true, data: result } };
+      },
       invalidatesTags: (_, __, { id }) => [
         { type: 'Transactions', id },
         'Transactions',
@@ -77,20 +70,19 @@ export const transactionsApi = createApi({
 
     // Delete transaction
     deleteTransaction: builder.mutation<{ success: boolean }, string>({
-      query: (id) => ({
-        url: `/${id}`,
-        method: 'DELETE',
-      }),
+      queryFn: (id) => {
+        const data = mockTransactionsService.deleteTransaction(id);
+        return { data };
+      },
       invalidatesTags: ['Transactions', 'TransactionStats'],
     }),
 
     // Bulk operations
     bulkDeleteTransactions: builder.mutation<{ success: boolean }, string[]>({
-      query: (ids) => ({
-        url: '/bulk-delete',
-        method: 'POST',
-        body: { ids },
-      }),
+      queryFn: (ids) => {
+        const data = mockTransactionsService.bulkDeleteTransactions(ids);
+        return { data };
+      },
       invalidatesTags: ['Transactions', 'TransactionStats'],
     }),
   }),

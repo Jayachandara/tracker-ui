@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, List, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
 import ImageIcon from '@mui/icons-material/Image';
-import { trans } from "api/mock/transactions-data";
+import { trans } from "core/api/mock/transactions-data";
 import { currencyFormat } from "core/utils/format-functions";
 import { useEffect, useMemo, useState } from "react";
 import { categoriseSpends, groupSpendsCategory } from "domain/transactions/services";

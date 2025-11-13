@@ -2,7 +2,7 @@ import { Avatar, Box, Divider, Grid, List, ListItemAvatar, ListItemButton, ListI
 import ImageIcon from '@mui/icons-material/Image';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
-import { trans } from "api/mock/transactions-data";
+import { trans } from "core/api/mock/transactions-data";
 import { currencyFormat, formatDateTime } from 'core/utils/format-functions';
 
 const Transactions = () => {

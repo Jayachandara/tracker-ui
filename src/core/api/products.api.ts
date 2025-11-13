@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Product } from 'domain/products/types';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+import { mockProductsService } from './mock/products-service';
 
 interface ProductsListResponse {
   items: Product[];
@@ -19,48 +18,46 @@ interface ProductFilters {
 
 export const productsApi = createApi({
   reducerPath: 'productsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_BASE_URL}/products`,
-    credentials: 'include',
-  }),
+  baseQuery: fakeBaseQuery(),
   tagTypes: ['Products'],
   endpoints: (builder) => ({
     getProducts: builder.query<ProductsListResponse, ProductFilters>({
-      query: (filters) => ({
-        url: '/list',
-        params: filters,
-      }),
+      queryFn: (filters) => {
+        const data = mockProductsService.getProducts(filters);
+        return { data };
+      },
       providesTags: ['Products'],
     }),
 
     getProductById: builder.query<{ data: Product }, string>({
-      query: (id) => `/${id}`,
+      queryFn: (id) => {
+        const data = mockProductsService.getProductById(id);
+        return { data: { data } };
+      },
       providesTags: (_, __, id) => [{ type: 'Products', id }],
     }),
 
     createProduct: builder.mutation<{ data: Product }, Partial<Product>>({
-      query: (data) => ({
-        url: '/create',
-        method: 'POST',
-        body: data,
-      }),
+      queryFn: (data) => {
+        const result = mockProductsService.createProduct(data);
+        return { data: { data: result } };
+      },
       invalidatesTags: ['Products'],
     }),
 
     updateProduct: builder.mutation<{ data: Product }, { id: string; data: Partial<Product> }>({
-      query: ({ id, data }) => ({
-        url: `/${id}`,
-        method: 'PATCH',
-        body: data,
-      }),
+      queryFn: ({ id, data }) => {
+        const result = mockProductsService.updateProduct(id, data);
+        return { data: { data: result } };
+      },
       invalidatesTags: (_, __, { id }) => [{ type: 'Products', id }, 'Products'],
     }),
 
     deleteProduct: builder.mutation<{ success: boolean }, string>({
-      query: (id) => ({
-        url: `/${id}`,
-        method: 'DELETE',
-      }),
+      queryFn: (id) => {
+        const data = mockProductsService.deleteProduct(id);
+        return { data };
+      },
       invalidatesTags: ['Products'],
     }),
   }),
