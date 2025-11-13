@@ -1,5 +1,5 @@
-import { Dispatch, ReactElement, SetStateAction, useMemo, useRef, useState } from 'react';
-import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material';
+import { Dispatch, ReactElement, SetStateAction, useRef } from 'react';
+import { Button, Divider, Stack, Typography, useTheme } from '@mui/material';
 import EChartsReactCore from 'echarts-for-react/lib/core';
 import ExpensesChart from './ExpensesChart';
 import { SpendCategoryGroupDTO, SpendDTO, SpendsGroupDTO } from 'dtos/transactions-dtos';
@@ -51,7 +51,7 @@ const ExpensesHeader = ({spends, spendsGroup,groupNames, setGroupNames}: Expense
           flex={'1 1 0%'}
         >
           {Array.isArray(spendsGroup) &&
-            spendsGroup.map((dataItem, index) => (
+            spendsGroup.map((dataItem, _index) => (
               <Button
                 key={dataItem.group}
                 variant="text"

@@ -780,7 +780,7 @@ export const trans:TransactionDTO[] =  [
     "account": "HDFC credit 9603",
     "expense": "Yes",
     "income": "-",
-    "irregularSpends": null,
+    "irregularSpends": "Yes",
     "category": "TRIPS",
     "tags": null,
     "note": null
