@@ -1,6 +1,7 @@
 import { AppBar, Box, Grid, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import SimpleBar from 'simplebar-react';
 import IconifyIcon from "components/base/IconifyIcon";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Transactions from "./Transactions";
 import StyledTabs from "components/ui/StyledTabs";
 import StyledTab from "components/ui/StyledTab";
@@ -93,9 +94,25 @@ interface TabPanelProps {
 
 const TabPanel = (props: TabPanelProps) => {
     const { children, value, index, ...other } = props;
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
+
+    useEffect(() => {
+        function updateHeight() {
+            const el = containerRef.current;
+            if (!el) return;
+            const top = el.getBoundingClientRect().top;
+            const available = window.innerHeight - top; // bottom buffer
+            setMaxHeight(available > 150 ? Math.floor(available) : 150);
+        }
+        updateHeight();
+        window.addEventListener('resize', updateHeight);
+        return () => window.removeEventListener('resize', updateHeight);
+    }, []);
 
     return (
         <div
+            ref={containerRef}
             role="tabpanel"
             hidden={value !== index}
             id={`full-width-tabpanel-${index}`}
@@ -103,7 +120,11 @@ const TabPanel = (props: TabPanelProps) => {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 2 }}>{children}</Box>
+                <Box sx={{ p: 1 }}>
+                    <SimpleBar style={{ maxHeight: maxHeight ? `${maxHeight}px` : '65vh' }}>
+                        <Box sx={{ p: 1.5 }}>{children}</Box>
+                    </SimpleBar>
+                </Box>
             )}
         </div>
     );

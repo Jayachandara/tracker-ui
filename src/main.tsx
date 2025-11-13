@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import 'simplebar/dist/simplebar.min.css';
 import { RouterProvider } from 'react-router-dom';
 import { theme } from './theme/theme.ts';
 import { CssBaseline, ThemeProvider } from '@mui/material';
