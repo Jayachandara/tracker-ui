@@ -17,6 +17,7 @@
     "@mui/material": "^7.3.5",
     "@mui/x-data-grid": "^8.18.0",
     "@mui/x-data-grid-generator": "^8.18.0",
+    "@reduxjs/toolkit": "^2.10.1",
     "dayjs": "^1.11.19",
     "echarts": "^6.0.0",
     "echarts-for-react": "^3.0.5",
@@ -24,6 +25,7 @@
     "rc-scrollbars": "^1.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^6.22.3",
     "simplebar": "^6.3.3",
     "simplebar-react": "^3.3.2"
