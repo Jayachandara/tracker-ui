@@ -19,8 +19,8 @@ const Transactions = () => {
                             <ImageIcon />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary={tran.place} primaryTypographyProps={{
-                        sx: {
+                    <ListItemText primary={tran.place} slotProps={{
+                        primary: {
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',

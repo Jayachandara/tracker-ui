@@ -1,139 +1,87 @@
-<a name="readme-top"></a>
+# Admin Dashboard (tracker-ui)
 
-<!-- PROJECT LOGO -->
-<br />
-<!-- PROJECT LOGO -->
-<div align="left" >
-<center>
-      <a href="public/elegent-logo.png" align="center">
-        <img src="public/elegent-logo.png" alt="Logo" width="50" height="50">
-      </a>    
-</center>
-<center>
-       <h1 style="display: inline-block; margin-left: 10px;">Elegent Admin Dashboard</h1>
-</center>
-</div>
-<br />
+Compact, customizable admin dashboard built with React, Vite, TypeScript and MUI (Material UI).
 
-<br />
-<br />
-<!-- TABLE OF CONTENTS -->
-<details  align="left">
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>    
-    <li><a href="#license">License</a></li>    
-    <li><a href="#license">Acknowledgments</a></li>
-  </ol>
-</details>
-<br />
-<br />
-<!-- ABOUT THE PROJECT -->
+![Product screenshot](public/homepage.png)
 
-## About The Project
+## Table of contents
+- About
+- Built with
+- Getting started
+  - Prerequisites
+  - Install
+  - Run (dev / build / preview)
+- Project structure & key files
+- Conventions & gotchas
+- License
 
-[![Product Name Screen Shot][product-screenshot]](public/homepage.png)
+## About
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This repository is a Vite + React + TypeScript dashboard scaffold using Material UI for components and ECharts for charts. It uses a theme-driven approach (MUI theme overrides) and lazy-loaded routes for performance.
 
-### <h3>Built With :</h3>
+## Built with
+- React 18
+- Vite
+- TypeScript
+- MUI (Material UI)
+- ECharts (`echarts` + `echarts-for-react`)
 
-[![React][React.js]][React-url]
-[![Material][Material]][React-url]
-![E-Chart][Apache-chart]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
-
-## Getting Started
+## Getting started
 
 ### Prerequisites
+- Node.js (recommend LTS >=16)
+- npm or yarn
 
-Before you begin, ensure you have met the following prerequisites:
+### Install
+Clone and install dependencies:
 
-- [Node.js](https://nodejs.org/) installed on your local machine
-- npm or yarn package manager installed with Node.js
+```powershell
+git clone https://github.com/Jayachandara/tracker-ui.git
+cd tracker-ui
+npm install
+```
 
-### Installation
+### Run (development)
 
-Follow these steps to get your project up and running:
+Start the development server (Vite):
 
-1. **Clone the repository**
-   ```sh
-   git clone https://github.com/themewagon/elegent.git
-   ```
-2. **Navigate to the project directory**
-   ```sh
-   cd elegent
-   ```
-3. **Install dependencies**
-   ```sh
-   npm install
-   ```
-4. **Start the development server**
-   ```sh
-   npm run dev
-   ```
-   Open your web browser and navigate to http://localhost:3000/elegent to view this application.
+```powershell
+npm run dev
+```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Open your browser at: `http://localhost:3000/elegent` — the router uses a `basename` of `/elegent` (see `vite.config.ts` and `src/routes/router.tsx`).
 
-<!-- LICENSE -->
+### Build & Preview
+
+```powershell
+npm run build     # runs tsc && vite build
+npm run preview   # preview built dist on port 5000
+```
+
+### Deploy
+
+This project includes a `predeploy` script that copies `index.html` to `404.html` and a `deploy` script using `gh-pages`:
+
+```powershell
+npm run predeploy
+npm run deploy
+```
+
+## Project structure & key files
+- `src/main.tsx` — app bootstrap; mounts `ThemeProvider`, `BreakpointsProvider`, `RouterProvider`.
+- `src/routes/router.tsx` & `src/routes/paths.ts` — routing configuration and `basename` (`/elegent`).
+- `src/layouts/main-layout` & `src/layouts/auth-layout` — global shells (topbar, sidebar, footer).
+- `src/theme/*` — theme tokens and MUI component overrides. Register per-component overrides in `src/theme/theme.ts` (example: `src/theme/components/Button.tsx`).
+- `src/components/sections/*` — feature pages and section components (dashboard, transactions, etc.).
+- `src/data/*` and `src/dtos/*` — demo data and DTO/type shapes.
+
+## Conventions & gotchas
+- Path aliases are used (imports like `import router from 'routes/router.tsx'`) — `vite-tsconfig-paths` is enabled in `vite.config.ts`.
+- Theme customization: edit tokens in `src/theme/palette.ts`, `src/theme/typography.ts`, and `src/theme/shadows.ts`; override components in `src/theme/components` and register them in `src/theme/theme.ts`.
+- Lazy loading: `React.lazy` + `Suspense` is used in `src/routes/router.tsx` with small artificial delays; follow this pattern for large routes.
+- Router basename: the app expects to run at `/elegent`. When testing locally, open `http://localhost:3000/elegent` to avoid 404s.
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE.txt` for details.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<a name="readme-top">
-<div align="">
-<a align="center" href="https://github.com/themewagon/elegent/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=themewagon/elegent" /><br />
-</a></a></div>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: public/homepage.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[Material]: https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white
-[Apache-chart]: https://img.shields.io/badge/echart-4.7.0-green
