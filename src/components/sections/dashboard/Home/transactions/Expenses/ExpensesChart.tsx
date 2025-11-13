@@ -5,10 +5,11 @@ import EChartsReactCore from 'echarts-for-react/lib/core';
 import { PieDataItemOption } from 'echarts/types/src/chart/pie/PieSeries.js';
 import { useMemo } from 'react';
 import { EChartsOption } from 'echarts-for-react';
+import { SpendDTO } from 'dtos/transactions-dtos';
 
 type ExpensesChartProps = {
   chartRef: React.MutableRefObject<EChartsReactCore | null>;
-  seriesData?: PieDataItemOption[];
+  spends: SpendDTO[];
   legendData?: any;
   colors?: string[];
   sx?: SxProps;
@@ -16,12 +17,13 @@ type ExpensesChartProps = {
 
 const ExpensesChart = ({
   chartRef,
-  seriesData,
+  spends,
   legendData,
   colors,
   ...rest
 }: ExpensesChartProps) => {
   const theme = useTheme();
+  const seriesData: PieDataItemOption[] = useMemo(() => (spends.map( i => ({value: i.totalAmount, name: i.name}))),[spends])
   const option: EChartsOption = useMemo(
     () => ({
       tooltip: {
@@ -33,7 +35,6 @@ const ExpensesChart = ({
       },
       series: [
         {
-          name: 'Website Visitors',
           type: 'pie',
           radius: ['65%', '80%'],
           avoidLabelOverlap: true,
@@ -63,7 +64,7 @@ const ExpensesChart = ({
         },
       ],
     }),
-    [theme],
+    [spends],
   );
 
   return <ReactEchart ref={chartRef} option={option} echarts={echarts} {...rest} />;

@@ -1,16 +1,17 @@
-import { AppBar, Box, Button, ButtonGroup, Grid, Icon, IconButton, InputAdornment, Stack, styled, Tab, Tabs, TextField, Typography, useTheme } from "@mui/material";
+import { AppBar, Box, Grid, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import IconifyIcon from "components/base/IconifyIcon";
 import { useState } from "react";
 import Transactions from "./Transactions";
 import StyledTabs from "components/ui/StyledTabs";
 import StyledTab from "components/ui/StyledTab";
+import Expenses from "./Expenses/Expenses";
 
-const MonthlyTracking = () => {
+const AllTrasanctions = () => {
 
     const theme = useTheme();
     const [value, setValue] = useState(0);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
@@ -60,16 +61,16 @@ const MonthlyTracking = () => {
                         onChange={handleChange}
                         aria-label="styled tabs example"
                     >
-                        <StyledTab label="Transactions" />
-                        <StyledTab label="Categories" />
-                        <StyledTab label="Merchants" />
+                        <StyledTab label="All" />
+                        <StyledTab label="Expenses" />
+                        <StyledTab label="Others" />
                     </StyledTabs>
                 </AppBar>
                 <TabPanel value={value} index={0} dir={theme.direction}>
                     <Transactions />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    Item Two
+                    <Expenses />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     Item Three
@@ -81,7 +82,7 @@ const MonthlyTracking = () => {
 }
 
 
-export default MonthlyTracking;
+export default AllTrasanctions;
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -102,9 +103,7 @@ const TabPanel = (props: TabPanelProps) => {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
+                <Box sx={{ p: 2 }}>{children}</Box>
             )}
         </div>
     );

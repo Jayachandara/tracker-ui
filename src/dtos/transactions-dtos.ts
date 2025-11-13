@@ -13,11 +13,17 @@ export type TransactionDTO = {
   note: string | null;
 };
 
-export type SpendsGroupDTO = "EMI" | "RegularSpends" | "IrregularSpends";
+export type SpendsGroupDTO = "EMI" | "Regular Spends" | "Irregular Spends";
 
 export type SpendDTO = {
   name: string;
   spendsCount: number;
   totalAmount: number;
   percentage: number; // 0..100, rounded to 2 decimals
+};
+
+export type SpendCategoryGroupDTO = {
+  group: "EMI" | "Regular Spends" | "Irregular Spends";
+  totalAmount: number;   // same units as input (e.g. rupees)
+  percentage: number;    // integer percentage (0 decimals) — sums to 100
 };

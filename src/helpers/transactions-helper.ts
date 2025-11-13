@@ -1,4 +1,4 @@
-import { SpendDTO, SpendsGroupDTO, TransactionDTO } from "dtos/transactions-dtos";
+import { SpendCategoryGroupDTO, SpendDTO, SpendsGroupDTO, TransactionDTO } from "dtos/transactions-dtos";
 
 type Aggregate = {
   spendsCount: number;
@@ -81,8 +81,8 @@ export const categoriseSpends = (
     const group: SpendsGroupDTO = isEmi
       ? "EMI"
       : t.irregularSpends === "Yes"
-      ? "IrregularSpends"
-      : "RegularSpends";
+      ? "Irregular Spends"
+      : "Regular Spends";
 
     if (!includeAll && !includeSet!.has(group)) continue;
 
@@ -122,12 +122,6 @@ export const categoriseSpends = (
   }
 
   return result;
-};
-
-export type SpendCategoryGroupDTO = {
-  group: "EMI" | "Regular Spends" | "Irregular Spends";
-  totalAmount: number;   // same units as input (e.g. rupees)
-  percentage: number;    // integer percentage (0 decimals) — sums to 100
 };
 
 export const groupSpendsCategory = (trans: TransactionDTO[]): SpendCategoryGroupDTO[] => {
