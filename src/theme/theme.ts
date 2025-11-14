@@ -64,7 +64,7 @@ export const theme = createTheme({
     MuiAvatar: Avatar,
     MuiButton: Button,
     MuiBadge: Badge,
-    MuiGrid2: Grid2,
+    MuiGrid: Grid2,
     MuiInput: Input,
     MuiPaper: Paper,
     MuiStack: Stack,

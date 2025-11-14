@@ -1,18 +1,18 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const InputBase: Components<Omit<Theme, 'components'>>['MuiInputBase'] = {
   defaultProps: {
     autoComplete: 'off',
   },
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       color: theme.palette.text.primary,
       fontSize: theme.typography.body1.fontSize,
       fontWeight: theme.typography.body1.fontWeight,
       maxWidth: 330,
     }),
-    input: ({ theme }) => ({
+    input: ({ theme }: any) => ({
       '&::placeholder': {
         opacity: 1,
         fontFamily: theme.typography.body1.fontFamily,
