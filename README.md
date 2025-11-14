@@ -1,87 +1,104 @@
-# Admin Dashboard (tracker-ui)
+# Tracker UI - Admin Dashboard
 
-Compact, customizable admin dashboard built with React, Vite, TypeScript and MUI (Material UI).
+A modern, responsive admin dashboard built with **React 18**, **Vite**, **TypeScript**, **Material UI**, and **Redux Toolkit**.
 
-![Product screenshot](public/homepage.png)
+![Tracker UI Dashboard](public/homepage.png)
 
-## Table of contents
-- About
-- Built with
-- Getting started
-  - Prerequisites
-  - Install
-  - Run (dev / build / preview)
-- Project structure & key files
-- Conventions & gotchas
-- License
+## 🚀 Quick Start
 
-## About
-
-This repository is a Vite + React + TypeScript dashboard scaffold using Material UI for components and ECharts for charts. It uses a theme-driven approach (MUI theme overrides) and lazy-loaded routes for performance.
-
-## Built with
-- React 18
-- Vite
-- TypeScript
-- MUI (Material UI)
-- ECharts (`echarts` + `echarts-for-react`)
-
-## Getting started
-
-### Prerequisites
-- Node.js (recommend LTS >=16)
-- npm or yarn
-
-### Install
-Clone and install dependencies:
-
-```powershell
-git clone https://github.com/Jayachandara/tracker-ui.git
-cd tracker-ui
+### Install & Run
+```bash
 npm install
-```
-
-### Run (development)
-
-Start the development server (Vite):
-
-```powershell
 npm run dev
+# Open: http://localhost:3000/tracker
 ```
 
-Open your browser at: `http://localhost:3000/tracker` — the router uses a `basename` of `/tracker` (see `vite.config.ts` and `src/routes/router.tsx`).
-
-### Build & Preview
-
-```powershell
-npm run build     # runs tsc && vite build
-npm run preview   # preview built dist on port 5000
+### Build & Deploy
+```bash
+npm run build    # Production build
+npm run preview  # Preview locally
+npm run deploy   # Deploy to GitHub Pages
 ```
 
-### Deploy
+## 📚 Documentation
 
-This project includes a `predeploy` script that copies `index.html` to `404.html` and a `deploy` script using `gh-pages`:
+- **[PROJECT_GUIDE.md](PROJECT_GUIDE.md)** — Complete project guide, architecture, and workflows
+- [Copilot Instructions](.github/copilot-instructions.md) — AI assistant setup
 
-```powershell
-npm run predeploy
-npm run deploy
+## 🏗️ Project Structure
+
+```
+src/
+├── core/              # Shared infrastructure (store, API, utils, types)
+├── domain/            # Feature-specific logic (hooks, services, types)
+├── components/        # React UI components
+├── layouts/           # Page shells (main, auth)
+├── pages/             # Page containers
+├── routes/            # Router config
+├── theme/             # MUI theme & component overrides
+├── providers/         # Context providers
+└── main.tsx          # App entry point
 ```
 
-## Project structure & key files
-- `src/main.tsx` — app bootstrap; mounts `ThemeProvider`, `BreakpointsProvider`, `RouterProvider`.
-- `src/routes/router.tsx` & `src/routes/paths.ts` — routing configuration and `basename` (`/tracker`).
-- `src/layouts/main-layout` & `src/layouts/auth-layout` — global shells (topbar, sidebar, footer).
-- `src/theme/*` — theme tokens and MUI component overrides. Register per-component overrides in `src/theme/theme.ts` (example: `src/theme/components/Button.tsx`).
-- `src/components/sections/*` — feature pages and section components (dashboard, transactions, etc.).
-- `src/data/*` and `src/dtos/*` — demo data and DTO/type shapes.
+## 🎯 Key Features
 
-## Conventions & gotchas
-- Path aliases are used (imports like `import router from 'routes/router.tsx'`) — `vite-tsconfig-paths` is enabled in `vite.config.ts`.
-- Theme customization: edit tokens in `src/theme/palette.ts`, `src/theme/typography.ts`, and `src/theme/shadows.ts`; override components in `src/theme/components` and register them in `src/theme/theme.ts`.
-- Lazy loading: `React.lazy` + `Suspense` is used in `src/routes/router.tsx` with small artificial delays; follow this pattern for large routes.
-- Router basename: the app expects to run at `/tracker`. When testing locally, open `http://localhost:3000/tracker` to avoid 404s.
+✅ **4-Layer Architecture** — Clean separation of concerns (UI → Domain → API → Core)  
+✅ **Redux + RTK Query** — Modern state management with mock data  
+✅ **MUI Customization** — Fully themed Material UI components  
+✅ **Path Aliases** — Fast imports with `tsconfig` paths  
+✅ **Lazy Loading** — Code-split routes for performance  
+✅ **TypeScript** — Full type safety  
 
-## License
+## 📦 Tech Stack
 
-Distributed under the MIT License. See `LICENSE.txt` for details.
+| Package | Version | Purpose |
+|---------|---------|---------|
+| React | 18 | UI framework |
+| Vite | 5.x | Build tool |
+| TypeScript | Latest | Type safety |
+| MUI | 7.x | Component library |
+| Redux Toolkit | Latest | State management |
+| RTK Query | Latest | Data fetching |
+| React Router | Latest | Client routing |
+| ECharts | Latest | Charts & visualization |
+
+## 🔧 Common Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server (http://localhost:3000/tracker) |
+| `npm run build` | Production build |
+| `npm run preview` | Preview build locally |
+| `npm run lint` | Run ESLint |
+| `npm run deploy` | Deploy to GitHub Pages |
+
+## 📋 Development Notes
+
+- **Router basename:** All routes use `/tracker` prefix
+- **Path aliases:** Use `import from 'core/...'` instead of relative paths
+- **Theme:** Edit `src/theme/` for styling; component overrides in `src/theme/components/`
+- **Mock data:** Located in `src/core/api/mock/` for easy development
+- **Redux hooks:** Use typed hooks from `core/store/hooks`
+
+## 🎨 Customization
+
+### Update Theme
+1. Edit global tokens: `src/theme/palette.ts`, `src/theme/typography.ts`
+2. Override components: `src/theme/components/[Component].tsx`
+3. Register in: `src/theme/theme.ts`
+
+### Add a Route
+1. Create page in `src/pages/[feature]/`
+2. Add to router in `src/routes/router.tsx`
+3. Update paths in `src/routes/paths.ts`
+
+**Full guide:** See [PROJECT_GUIDE.md](PROJECT_GUIDE.md)
+
+## 📝 License
+
+MIT License — See `LICENSE.txt` for details
+
+---
+
+**Need help?** Check [PROJECT_GUIDE.md](PROJECT_GUIDE.md) for detailed documentation.
 
