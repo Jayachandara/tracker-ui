@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography, Popover, MenuItem, TextField, Button } from "@mui/material";
+import { Box, IconButton, Stack, Typography, Popover, MenuItem, TextField, Button, Radio } from "@mui/material";
 import IconifyIcon from "components/base/IconifyIcon";
 import { useState } from "react";
 
@@ -7,7 +7,7 @@ interface MonthRangeSelectorProps {
     onMonthChange: (monthIndex: number) => void;
     rangeType: string;
     rangeLabel: string;
-    onRangeChange: (type: string, label: string) => void;
+    onRangeChange: (type: string, label: string, startDate?: Date, endDate?: Date) => void;
 }
 
 const MonthRangeSelector = ({
@@ -28,6 +28,8 @@ const MonthRangeSelector = ({
     );
 
     const handleMonthChange = (monthIndex: number) => {
+        const start = new Date(new Date().getFullYear(), monthIndex, 1);
+        const end = new Date(new Date().getFullYear(), monthIndex + 1, 0, 23, 59, 59);
         onMonthChange(monthIndex);
         setMonthAnchorEl(null);
     };
@@ -46,32 +48,43 @@ const MonthRangeSelector = ({
     const applyCustomRange = () => {
         if (!customStart || !customEnd) return;
         const s = new Date(customStart);
+        s.setHours(0, 0, 0, 0);
         const e = new Date(customEnd);
+        e.setHours(23, 59, 59, 999);
         const sLabel = s.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
         const eLabel = e.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-        onRangeChange('custom', `${sLabel} - ${eLabel}`);
+        onRangeChange('custom', `${sLabel} - ${eLabel}`, s, e);
         handleClose();
     };
 
     const handleThisMonth = () => {
-        onMonthChange(new Date().getMonth());
-        onRangeChange('month', '');
+        const now = new Date();
+        const start = new Date(now.getFullYear(), now.getMonth(), 1);
+        const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+        onMonthChange(now.getMonth());
+        onRangeChange('month', '', start, end);
         handleClose();
     };
 
     const handleLast3Months = () => {
         const end = new Date();
+        end.setHours(23, 59, 59, 999);
         const start = new Date();
         start.setMonth(start.getMonth() - 2);
-        onRangeChange('3months', `${start.toLocaleString(undefined, { month: 'short' })} - ${end.toLocaleString(undefined, { month: 'short' })}`);
+        start.setDate(1);
+        start.setHours(0, 0, 0, 0);
+        onRangeChange('3months', `${start.toLocaleString(undefined, { month: 'short' })} - ${end.toLocaleString(undefined, { month: 'short' })}`, start, end);
         handleClose();
     };
 
     const handleLast6Months = () => {
         const end = new Date();
+        end.setHours(23, 59, 59, 999);
         const start = new Date();
         start.setMonth(start.getMonth() - 5);
-        onRangeChange('6months', `${start.toLocaleString(undefined, { month: 'short' })} - ${end.toLocaleString(undefined, { month: 'short' })}`);
+        start.setDate(1);
+        start.setHours(0, 0, 0, 0);
+        onRangeChange('6months', `${start.toLocaleString(undefined, { month: 'short' })} - ${end.toLocaleString(undefined, { month: 'short' })}`, start, end);
         handleClose();
     };
 
@@ -99,14 +112,31 @@ const MonthRangeSelector = ({
                 onClose={() => setMonthAnchorEl(null)}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             >
-                <Box sx={{ maxHeight: 300, overflowY: 'auto' }}>
+                <Box sx={{ maxHeight: 300, overflowY: 'auto', minWidth: 180, p: 1 }}>
                     {months.map((m, idx) => (
                         <MenuItem 
                             key={idx} 
-                            selected={idx === selectedMonthIndex}
                             onClick={() => handleMonthChange(idx)}
+                            sx={{ 
+                                py: 1.5,
+                                px: 2,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 2
+                            }}
                         >
-                            {m}
+                            <Radio 
+                                checked={idx === selectedMonthIndex}
+                                size="small"
+                                color="primary"
+                                sx={{ 
+                                    p: 0,
+                                    '& .MuiSvgIcon-root': {
+                                        fontSize: 20
+                                    }
+                                }}
+                            />
+                            <Typography variant="body2">{m}</Typography>
                         </MenuItem>
                     ))}
                 </Box>

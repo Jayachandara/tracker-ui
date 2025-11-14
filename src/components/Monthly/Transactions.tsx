@@ -4,8 +4,20 @@ import CallMadeIcon from '@mui/icons-material/CallMade';
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
 import { trans } from "core/api/mock/transactions-data";
 import { currencyFormat, formatDateTime } from 'core/utils/format-functions';
+import { useMemo } from 'react';
 
-const Transactions = () => {
+interface TransactionsProps {
+    startDate: Date;
+    endDate: Date;
+}
+
+const Transactions = ({ startDate, endDate }: TransactionsProps) => {
+    const filteredTransactions = useMemo(() => {
+        return trans.filter(tran => {
+            const tranDate = new Date(tran.date);
+            return tranDate >= startDate && tranDate <= endDate;
+        });
+    }, [startDate, endDate]);
 
     return (
         <Box>
@@ -13,7 +25,7 @@ const Transactions = () => {
                 sx={{ width: '100%', bgcolor: 'background.paper' }}
                 component="nav"
             >
-                {trans.map(tran => <><ListItemButton>
+                {filteredTransactions.map(tran => <><ListItemButton>
                     <ListItemAvatar>
                         <Avatar>
                             <ImageIcon />

@@ -8,14 +8,26 @@ import { SpendCategoryGroupDTO, SpendsGroupDTO } from "domain/transactions/types
 import { theme } from "theme/theme";
 import ExpensesHeader from "./ExpensesHeader";
 
-const Expenses = () => {
+interface ExpensesProps {
+    startDate: Date;
+    endDate: Date;
+}
 
-    const spendsGroup = useMemo<SpendCategoryGroupDTO[]>(() => groupSpendsCategory(trans), []);
+const Expenses = ({ startDate, endDate }: ExpensesProps) => {
+
+    const filteredTransactions = useMemo(() => {
+        return trans.filter(tran => {
+            const tranDate = new Date(tran.date);
+            return tranDate >= startDate && tranDate <= endDate;
+        });
+    }, [startDate, endDate]);
+
+    const spendsGroup = useMemo<SpendCategoryGroupDTO[]>(() => groupSpendsCategory(filteredTransactions), [filteredTransactions]);
 
     const [groupNames, setGroupNames] = useState<SpendsGroupDTO[]>(spendsGroup.map(i => i.group))
-    const [spends, setSpends] = useState(categoriseSpends(trans));
+    const [spends, setSpends] = useState(categoriseSpends(filteredTransactions));
 
-    useEffect(() => {setSpends(categoriseSpends(trans, groupNames))},[groupNames])
+    useEffect(() => {setSpends(categoriseSpends(filteredTransactions, groupNames))},[groupNames, filteredTransactions])
 
     console.log("groupNames", groupNames)
 

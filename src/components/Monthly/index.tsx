@@ -15,16 +15,29 @@ const MonthlyTracking = () => {
     const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(new Date().getMonth());
     const [rangeType, setRangeType] = useState<string>('month');
     const [rangeLabel, setRangeLabel] = useState<string>('');
+    const [dateRange, setDateRange] = useState<{ start: Date; end: Date }>(() => {
+        const now = new Date();
+        return {
+            start: new Date(now.getFullYear(), now.getMonth(), 1),
+            end: new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59)
+        };
+    });
 
     const handleMonthChange = (monthIndex: number) => {
         setSelectedMonthIndex(monthIndex);
         setRangeType('month');
         setRangeLabel('');
+        const start = new Date(new Date().getFullYear(), monthIndex, 1);
+        const end = new Date(new Date().getFullYear(), monthIndex + 1, 0, 23, 59, 59);
+        setDateRange({ start, end });
     };
 
-    const handleRangeChange = (type: string, label: string) => {
+    const handleRangeChange = (type: string, label: string, startDate?: Date, endDate?: Date) => {
         setRangeType(type);
         setRangeLabel(label);
+        if (startDate && endDate) {
+            setDateRange({ start: startDate, end: endDate });
+        }
     };
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -75,10 +88,10 @@ const MonthlyTracking = () => {
                     </StyledTabs>
                 </AppBar>
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    <Transactions />
+                    <Transactions startDate={dateRange.start} endDate={dateRange.end} />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <Expenses />
+                    <Expenses startDate={dateRange.start} endDate={dateRange.end} />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     Item Three
