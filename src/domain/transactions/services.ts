@@ -1,121 +1,19 @@
-import { Transaction, TransactionFilters, TransactionStats, CreateTransactionDTO, TransactionDTO, SpendsGroupDTO, SpendDTO, SpendCategoryGroupDTO } from './types';
-// TODO: Replace with actual API call when backend is ready
-// import { transactionApi } from 'api/endpoints/transactions.api';
-
-// Mock data - replace with actual API calls
-const transactionsMockData: Transaction[] = [];
+import { TransactionDTO, SpendsGroupDTO, SpendDTO, SpendCategoryGroupDTO } from './types';
 
 /**
- * Transaction business logic and data layer
- * Handles all transaction-related operations
+ * Transaction business logic utilities
+ * 
+ * For data fetching and mutations, use RTK Query hooks from 'core/api/transactions.api':
+ * - useGetTransactionsQuery
+ * - useGetTransactionByIdQuery
+ * - useGetTransactionStatsQuery
+ * - useCreateTransactionMutation
+ * - useUpdateTransactionMutation
+ * - useDeleteTransactionMutation
+ * - useBulkDeleteTransactionsMutation
  */
 
-class TransactionService {
-  /**
-   * Get all transactions with filtering and pagination
-   */
-  getTransactions(
-    filters?: TransactionFilters,
-    page = 1,
-    pageSize = 10
-  ): Promise<{ items: Transaction[]; total: number }> {
-    return new Promise((resolve) => {
-      // Simulate API call
-      setTimeout(() => {
-        let filtered = [...transactionsMockData];
-
-        if (filters?.type) {
-          filtered = filtered.filter((t: Transaction) => t.type === filters.type);
-        }
-        if (filters?.category) {
-          filtered = filtered.filter((t: Transaction) => t.category === filters.category);
-        }
-        if (filters?.account) {
-          filtered = filtered.filter((t: Transaction) => t.account === filters.account);
-        }
-
-        const total = filtered.length;
-        const start = (page - 1) * pageSize;
-        const items = filtered.slice(start, start + pageSize);
-
-        resolve({ items, total });
-      }, 300);
-    });
-  }
-
-  /**
-   * Get transaction by ID
-   */
-  getTransactionById(id: string): Promise<Transaction | null> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const transaction = transactionsMockData.find((t: Transaction) => t.id === id);
-        resolve(transaction || null);
-      }, 200);
-    });
-  }
-
-  /**
-   * Get transaction statistics
-   */
-  getTransactionStats(): Promise<TransactionStats> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const stats: TransactionStats = {
-          totalIncome: transactionsMockData
-            .filter((t: Transaction) => t.type === 'income')
-            .reduce((sum: number, t: Transaction) => sum + t.amount, 0),
-          totalExpense: transactionsMockData
-            .filter((t: Transaction) => t.type === 'expense')
-            .reduce((sum: number, t: Transaction) => sum + t.amount, 0),
-          balance:
-            transactionsMockData
-              .filter((t: Transaction) => t.type === 'income')
-              .reduce((sum: number, t: Transaction) => sum + t.amount, 0) -
-            transactionsMockData
-              .filter((t: Transaction) => t.type === 'expense')
-              .reduce((sum: number, t: Transaction) => sum + t.amount, 0),
-          transactionCount: transactionsMockData.length,
-        };
-        resolve(stats);
-      }, 300);
-    });
-  }
-
-  /**
-   * Create new transaction
-   */
-  createTransaction(data: CreateTransactionDTO): Promise<Transaction> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const newTransaction: Transaction = {
-          id: String(Date.now()),
-          userId: 'user-1',
-          ...data,
-          status: 'completed',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        };
-        resolve(newTransaction);
-      }, 500);
-    });
-  }
-
-  /**
-   * Delete transaction
-   */
-  deleteTransaction(_id: string): Promise<boolean> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, 300);
-    });
-  }
-}
-
-export const transactionService = new TransactionService();
-
-// ============ Legacy transaction helper functions (from helpers/transactions-helper.ts) ============
+// ============ Transaction helper functions ============
 
 function hasTokenExact(csv: string | null | undefined, token: string): boolean {
   if (!csv) return false;
