@@ -5,7 +5,7 @@ import SaleInfoCards from 'components/sections/dashboard/Home/Sales/SaleInfoSect
 import OverView from 'components/sections/dashboard/Home/Sales/OverView/OverView';
 
 import { drawerWidth } from 'layouts/main-layout';
-import MonthlyTracking from 'components/sections/dashboard/Home/transactions/AllTransactions';
+import MonthlyTracking from 'components/sections/dashboard/Home/MonthlyTracking';
 
 const Dashboard = (): ReactElement => {
   return (
