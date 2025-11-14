@@ -4,8 +4,8 @@ import IconifyIcon from "components/base/IconifyIcon";
 import { useState, useEffect, useRef } from "react";
 import { useScrollbar } from 'providers/ScrollbarProvider.tsx';
 import Transactions from "./Transactions";
-import StyledTabs from "components/ui/StyledTabs";
-import StyledTab from "components/ui/StyledTab";
+import StyledTabs from "theme/styles/StyledTabs";
+import StyledTab from "theme/styles/StyledTab";
 import Expenses from "./Expenses/Expenses";
 
 const MonthlyTracking = () => {
