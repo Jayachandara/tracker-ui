@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography, Popover, MenuItem, TextField, Button, Radio } from "@mui/material";
+import { Box, IconButton, Stack, Typography, Popover, MenuItem, TextField, Button } from "@mui/material";
 import IconifyIcon from "components/base/IconifyIcon";
 import { useState } from "react";
 
@@ -88,6 +88,26 @@ const MonthRangeSelector = ({
         handleClose();
     };
 
+    const handle1Year = () => {
+        const end = new Date();
+        end.setHours(23, 59, 59, 999);
+        const start = new Date();
+        start.setMonth(start.getMonth() - 11);
+        start.setDate(1);
+        start.setHours(0, 0, 0, 0);
+        onRangeChange('1year', `${start.toLocaleString(undefined, { month: 'short' })} - ${end.toLocaleString(undefined, { month: 'short' })}`, start, end);
+        handleClose();
+    };
+
+    const handleAllTime = () => {
+        const end = new Date();
+        end.setHours(23, 59, 59, 999);
+        const start = new Date(2000, 0, 1);
+        start.setHours(0, 0, 0, 0);
+        onRangeChange('alltime', 'All Time', start, end);
+        handleClose();
+    };
+
     return (
         <Stack alignItems="center" direction={{ sm: 'row' }} spacing={1}>
             <Typography variant="subtitle1" color={'grey'}>
@@ -112,31 +132,18 @@ const MonthRangeSelector = ({
                 onClose={() => setMonthAnchorEl(null)}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             >
-                <Box sx={{ maxHeight: 300, overflowY: 'auto', minWidth: 180, p: 1 }}>
+                <Box sx={{ maxHeight: 300, overflowY: 'auto', p: 1 }}>
                     {months.map((m, idx) => (
                         <MenuItem 
                             key={idx} 
                             onClick={() => handleMonthChange(idx)}
+                            selected={idx === selectedMonthIndex}
                             sx={{ 
-                                py: 1.5,
-                                px: 2,
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 2
+                                py: 1,
+                                px: 2
                             }}
                         >
-                            <Radio 
-                                checked={idx === selectedMonthIndex}
-                                size="small"
-                                color="primary"
-                                sx={{ 
-                                    p: 0,
-                                    '& .MuiSvgIcon-root': {
-                                        fontSize: 20
-                                    }
-                                }}
-                            />
-                            <Typography variant="body2">{m}</Typography>
+                            {m}
                         </MenuItem>
                     ))}
                 </Box>
@@ -158,38 +165,159 @@ const MonthRangeSelector = ({
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                slotProps={{
+                    paper: {
+                        elevation: 2,
+                        sx: { 
+                            mt: 1,
+                            borderRadius: 2,
+                            border: '1px solid',
+                            borderColor: 'divider'
+                        }
+                    }
+                }}
             >
-                <Box sx={{ p: 1, minWidth: 220 }}>
-                    {!showCustom ? (
-                        <>
-                            <MenuItem onClick={handleThisMonth}>This Month</MenuItem>
-                            <MenuItem onClick={handleLast3Months}>Last 3 Months</MenuItem>
-                            <MenuItem onClick={handleLast6Months}>Last 6 Months</MenuItem>
-                            <MenuItem onClick={() => setShowCustom(true)}>Custom Range</MenuItem>
-                        </>
-                    ) : (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, p: 1 }}>
+                {!showCustom ? (
+                    <Box sx={{ py: 0.5 }}>
+                        <MenuItem 
+                            onClick={handleThisMonth} 
+                            sx={{ 
+                                py: 1,
+                                px: 2.5,
+                                gap: 1.5,
+                                '&:hover': {
+                                    bgcolor: 'action.hover'
+                                }
+                            }}
+                        >
+                            <IconifyIcon 
+                                icon={rangeType === 'month' ? "mdi:circle" : "mdi:circle-outline"}
+                                style={{ fontSize: '16px', color: rangeType === 'month' ? '#1976d2' : '#bdbdbd' }}
+                            />
+                            <Typography variant="body2" sx={{ flex: 1 }}>This Month</Typography>
+                        </MenuItem>
+                        <MenuItem 
+                            onClick={handleLast3Months} 
+                            sx={{ 
+                                py: 1,
+                                px: 2.5,
+                                gap: 1.5,
+                                '&:hover': {
+                                    bgcolor: 'action.hover'
+                                }
+                            }}
+                        >
+                            <IconifyIcon 
+                                icon={rangeType === '3months' ? "mdi:circle" : "mdi:circle-outline"}
+                                style={{ fontSize: '16px', color: rangeType === '3months' ? '#1976d2' : '#bdbdbd' }}
+                            />
+                            <Typography variant="body2" sx={{ flex: 1 }}>Last 3 Months</Typography>
+                        </MenuItem>
+                        <MenuItem 
+                            onClick={handleLast6Months} 
+                            sx={{ 
+                                py: 1,
+                                px: 2.5,
+                                gap: 1.5,
+                                '&:hover': {
+                                    bgcolor: 'action.hover'
+                                }
+                            }}
+                        >
+                            <IconifyIcon 
+                                icon={rangeType === '6months' ? "mdi:circle" : "mdi:circle-outline"}
+                                style={{ fontSize: '16px', color: rangeType === '6months' ? '#1976d2' : '#bdbdbd' }}
+                            />
+                            <Typography variant="body2" sx={{ flex: 1 }}>Last 6 Months</Typography>
+                        </MenuItem>
+                        <MenuItem 
+                            onClick={handle1Year} 
+                            sx={{ 
+                                py: 1,
+                                px: 2.5,
+                                gap: 1.5,
+                                '&:hover': {
+                                    bgcolor: 'action.hover'
+                                }
+                            }}
+                        >
+                            <IconifyIcon 
+                                icon={rangeType === '1year' ? "mdi:circle" : "mdi:circle-outline"}
+                                style={{ fontSize: '16px', color: rangeType === '1year' ? '#1976d2' : '#bdbdbd' }}
+                            />
+                            <Typography variant="body2" sx={{ flex: 1 }}>Last 1 Year</Typography>
+                        </MenuItem>
+                        <MenuItem 
+                            onClick={handleAllTime} 
+                            sx={{ 
+                                py: 1,
+                                px: 2.5,
+                                gap: 1.5,
+                                '&:hover': {
+                                    bgcolor: 'action.hover'
+                                }
+                            }}
+                        >
+                            <IconifyIcon 
+                                icon={rangeType === 'alltime' ? "mdi:circle" : "mdi:circle-outline"}
+                                style={{ fontSize: '16px', color: rangeType === 'alltime' ? '#1976d2' : '#bdbdbd' }}
+                            />
+                            <Typography variant="body2" sx={{ flex: 1 }}>All Time</Typography>
+                        </MenuItem>
+                        <MenuItem 
+                            onClick={() => setShowCustom(true)} 
+                            sx={{ 
+                                py: 1,
+                                px: 2.5,
+                                gap: 1.5,
+                                '&:hover': {
+                                    bgcolor: 'action.hover'
+                                }
+                            }}
+                        >
+                            <IconifyIcon 
+                                icon={rangeType === 'custom' ? "mdi:circle" : "mdi:circle-outline"}
+                                style={{ fontSize: '16px', color: rangeType === 'custom' ? '#1976d2' : '#bdbdbd' }}
+                            />
+                            <Typography variant="body2" sx={{ flex: 1 }}>Custom Range</Typography>
+                        </MenuItem>
+                    </Box>
+                ) : (
+                    <Box sx={{ p: 2.5, minWidth: 280 }}>
+                        <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
+                            Select Date Range
+                        </Typography>
+                        <Stack spacing={2}>
                             <TextField
-                                label="Start"
+                                label="Start Date"
                                 type="date"
+                                size="small"
                                 value={customStart}
                                 onChange={(e) => setCustomStart(e.target.value)}
                                 InputLabelProps={{ shrink: true }}
+                                fullWidth
                             />
                             <TextField
-                                label="End"
+                                label="End Date"
                                 type="date"
+                                size="small"
                                 value={customEnd}
                                 onChange={(e) => setCustomEnd(e.target.value)}
                                 InputLabelProps={{ shrink: true }}
+                                fullWidth
                             />
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 1 }}>
-                                <Button size="small" onClick={() => setShowCustom(false)}>Cancel</Button>
-                                <Button size="small" variant="contained" onClick={applyCustomRange}>Apply</Button>
-                            </Box>
+                        </Stack>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 2.5 }}>
+                            <Button size="small" onClick={() => setShowCustom(false)} sx={{ textTransform: 'none' }}>
+                                Cancel
+                            </Button>
+                            <Button size="small" variant="contained" onClick={applyCustomRange} sx={{ textTransform: 'none' }}>
+                                Apply
+                            </Button>
                         </Box>
-                    )}
-                </Box>
+                    </Box>
+                )}
             </Popover>
         </Stack>
     );

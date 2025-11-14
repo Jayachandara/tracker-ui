@@ -25,7 +25,9 @@ const Transactions = ({ startDate, endDate }: TransactionsProps) => {
                 sx={{ width: '100%', bgcolor: 'background.paper' }}
                 component="nav"
             >
-                {filteredTransactions.map(tran => <><ListItemButton>
+                {filteredTransactions.map((tran, index) => (
+                    <Box key={`${tran.date}-${tran.place}-${index}`}>
+                        <ListItemButton>
                     <ListItemAvatar>
                         <Avatar>
                             <ImageIcon />
@@ -56,9 +58,8 @@ const Transactions = ({ startDate, endDate }: TransactionsProps) => {
                     </Box>
                 </ListItemButton>
                       <Divider component="li" />
-                      </>
-
-                )}
+                    </Box>
+                ))}
             </List>
         </Box>
     )
