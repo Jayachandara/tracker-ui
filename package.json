@@ -17,6 +17,7 @@
     "@mui/material": "^7.3.5",
     "@mui/x-data-grid": "^8.18.0",
     "@mui/x-data-grid-generator": "^8.18.0",
+    "@mui/x-date-pickers": "^7.29.4",
     "@reduxjs/toolkit": "^2.10.1",
     "dayjs": "^1.11.19",
     "echarts": "^6.0.0",

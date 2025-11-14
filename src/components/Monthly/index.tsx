@@ -25,6 +25,7 @@ const MonthlyTracking = () => {
         };
     });
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+    const [isViewingDetails, setIsViewingDetails] = useState(false);
 
     const handleMonthChange = (monthIndex: number) => {
         setSelectedMonthIndex(monthIndex);
@@ -118,27 +119,34 @@ const MonthlyTracking = () => {
                     </StyledTabs>
                 </AppBar>
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    <Box sx={{ mb: 2, p: 2, bgcolor: 'background.default', borderRadius: 2 }}>
-                        <Stack direction="row" spacing={2} justifyContent="space-around">
-                            <Stack alignItems="center">
-                                <Typography variant="body2" color="text.secondary">
-                                    Total Income
-                                </Typography>
-                                <Typography variant="h6" color="success.main" fontWeight={600}>
-                                    {currencyFormat(totalIncome)}
-                                </Typography>
+                    {!isViewingDetails && (
+                        <Box sx={{ mb: 2, p: 2, bgcolor: 'background.default', borderRadius: 2 }}>
+                            <Stack direction="row" spacing={2} justifyContent="space-around">
+                                <Stack alignItems="center">
+                                    <Typography variant="body2" color="text.secondary">
+                                        Total Income
+                                    </Typography>
+                                    <Typography variant="h6" color="success.main" fontWeight={600}>
+                                        {currencyFormat(totalIncome)}
+                                    </Typography>
+                                </Stack>
+                                <Stack alignItems="center">
+                                    <Typography variant="body2" color="text.secondary">
+                                        Total Expenses
+                                    </Typography>
+                                    <Typography variant="h6" color="error.main" fontWeight={600}>
+                                        {currencyFormat(totalExpenses)}
+                                    </Typography>
+                                </Stack>
                             </Stack>
-                            <Stack alignItems="center">
-                                <Typography variant="body2" color="text.secondary">
-                                    Total Expenses
-                                </Typography>
-                                <Typography variant="h6" color="error.main" fontWeight={600}>
-                                    {currencyFormat(totalExpenses)}
-                                </Typography>
-                            </Stack>
-                        </Stack>
-                    </Box>
-                    <Transactions startDate={dateRange.start} endDate={dateRange.end} categoryFilter={categoryFilter} />
+                        </Box>
+                    )}
+                    <Transactions 
+                        startDate={dateRange.start} 
+                        endDate={dateRange.end} 
+                        categoryFilter={categoryFilter}
+                        onViewingDetails={setIsViewingDetails}
+                    />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
                     {categoryFilter ? (
