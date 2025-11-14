@@ -190,7 +190,7 @@ const TabPanel = (props: TabPanelProps) => {
             const el = containerRef.current;
             if (!el) return;
             const top = el.getBoundingClientRect().top;
-            const available = window.innerHeight - top; // bottom buffer
+            const available = window.innerHeight - top + 20; // bottom buffer
             setMaxHeight(available > 150 ? Math.floor(available) : 150);
         }
         updateHeight();

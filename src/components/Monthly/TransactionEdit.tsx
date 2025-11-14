@@ -1,7 +1,4 @@
-import { Box, IconButton, Stack, Typography, TextField, Select, MenuItem, Button, Switch } from "@mui/material";
-import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
+import { Box, IconButton, Stack, Typography, TextField, Select, MenuItem, Button, Switch, Popover } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import { TransactionDTO } from 'domain/transactions/types';
@@ -17,7 +14,31 @@ interface TransactionEditProps {
 const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) => {
     const [editedTransaction, setEditedTransaction] = useState<TransactionDTO>({ ...transaction });
     const [editingKey, setEditingKey] = useState<null | 'amount' | 'place' | 'datetime' | 'account' | 'tags' | 'note'>(null);
-    const dateTimeValue: Dayjs = dayjs(`${editedTransaction.date.split('T')[0]}T${editedTransaction.time}`);
+    const [dateTimeAnchor, setDateTimeAnchor] = useState<HTMLElement | null>(null);
+
+    const formatDateTime = (dateStr: string, timeStr: string) => {
+        const date = new Date(dateStr);
+        const currentYear = new Date().getFullYear();
+        const day = date.getDate();
+        const month = date.toLocaleString('en-US', { month: 'short' });
+        const year = date.getFullYear();
+        
+        // Parse time and format to 12-hour with AM/PM
+        const [hours, minutes] = timeStr.split(':').map(Number);
+        const period = hours >= 12 ? 'PM' : 'AM';
+        const hours12 = hours % 12 || 12;
+        const formattedTime = `${hours12.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${period}`;
+        
+        // Format date based on year
+        const dateFormat = year === currentYear 
+            ? `${day} ${month}` 
+            : `${day} ${month}'${year.toString().slice(-2)}`;
+        
+        return `${dateFormat} ${formattedTime}`;
+    };
+
+    const categoryConfig = getCategoryConfig(editedTransaction.category);
+    const CategoryIcon = categoryConfig.icon;
 
     const hasChanges = useMemo(() => {
         return JSON.stringify(transaction) !== JSON.stringify(editedTransaction);
@@ -115,64 +136,122 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
                 {/* Footer: Category (left) and Date & Time (right) */}
                 <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mt: 1 }}>
                     {/* Category (left) */}
-                    <Select
-                        value={editedTransaction.category || ''}
-                        onChange={(e) => handleFieldChange('category', e.target.value)}
-                        variant="standard"
-                        disableUnderline
-                        sx={{
-                            flex: 1,
-                            minWidth: 0,
-                            '& .MuiSelect-select': { p: 0, display: 'flex', alignItems: 'center', gap: 0.75 },
-                        }}
-                        renderValue={(value) => (
-                            <Typography sx={{ fontSize: '0.9rem', color: 'text.secondary' }}>
-                                {value || 'Uncategorized'}
-                            </Typography>
-                        )}
-                    >
-                        {categories.map((cat) => (
-                            <MenuItem key={cat} value={cat}>
-                                {cat}
-                            </MenuItem>
-                        ))}
-                    </Select>
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                        <Select
+                            value={editedTransaction.category || ''}
+                            onChange={(e) => handleFieldChange('category', e.target.value)}
+                            variant="standard"
+                            disableUnderline
+                            sx={{
+                                bgcolor: categoryConfig.bgColor,
+                                color: categoryConfig.color,
+                                borderRadius: 2.5,
+                                px: 2,
+                                py: 0.75,
+                                '& .MuiSelect-select': { 
+                                    p: 0, 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    gap: 0.75,
+                                    fontWeight: 600
+                                },
+                            }}
+                            renderValue={(value) => (
+                                <Stack direction="row" alignItems="center" spacing={0.75}>
+                                    {CategoryIcon && <CategoryIcon sx={{ fontSize: 20 }} />}
+                                    <Typography sx={{ fontSize: '0.95rem', fontWeight: 600 }}>
+                                        {value || 'Uncategorized'}
+                                    </Typography>
+                                </Stack>
+                            )}
+                        >
+                            {categories.map((cat) => {
+                                const catConfig = getCategoryConfig(cat);
+                                const CatIcon = catConfig.icon;
+                                return (
+                                    <MenuItem key={cat} value={cat}>
+                                        <Stack direction="row" alignItems="center" spacing={1}>
+                                            {CatIcon && <CatIcon sx={{ fontSize: 18 }} />}
+                                            <Typography>{cat}</Typography>
+                                        </Stack>
+                                    </MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </Box>
 
                     {/* Date & Time (right) */}
                     <Box sx={{ flex: 1, textAlign: 'right' }}>
-                        {editingKey === 'datetime' ? (
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateTimePicker
-                                    value={dateTimeValue}
-                                    onChange={(v: Dayjs | null) => {
-                                        if (!v) return;
-                                        handleFieldChange('date', v.format('YYYY-MM-DD') + 'T00:00:00');
-                                        handleFieldChange('time', v.format('HH:mm'));
-                                    }}
-                                    onClose={() => setEditingKey(null)}
-                                    slotProps={{
-                                        textField: {
-                                            variant: 'standard',
-                                            InputProps: { disableUnderline: true },
-                                            sx: { '& input': { p: 0, textAlign: 'right', fontSize: '0.85rem' } }
-                                        }
-                                    }}
-                                />
-                            </LocalizationProvider>
-                        ) : (
-                            <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', cursor: 'pointer' }} onClick={() => setEditingKey('datetime')}>
-                                {new Date(editedTransaction.date).toLocaleDateString()} • {editedTransaction.time}
-                            </Typography>
-                        )}
+                        <Typography 
+                            sx={{ color: 'text.secondary', fontSize: '0.9rem', cursor: 'pointer' }} 
+                            onClick={(e) => setDateTimeAnchor(e.currentTarget)}
+                        >
+                            {formatDateTime(editedTransaction.date, editedTransaction.time)}
+                        </Typography>
+                        <Popover
+                            open={Boolean(dateTimeAnchor)}
+                            anchorEl={dateTimeAnchor}
+                            onClose={() => setDateTimeAnchor(null)}
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            slotProps={{
+                                paper: {
+                                    sx: {
+                                        p: 2,
+                                        borderRadius: 2,
+                                        boxShadow: 2,
+                                        minWidth: 220
+                                    }
+                                }
+                            }}
+                        >
+                            <Stack spacing={1.5}>
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5, fontSize: '0.75rem' }}>
+                                        Date
+                                    </Typography>
+                                    <TextField
+                                        type="date"
+                                        autoFocus
+                                        fullWidth
+                                        value={editedTransaction.date.split('T')[0]}
+                                        onChange={(e) => handleFieldChange('date', e.target.value + 'T00:00:00')}
+                                        variant="standard"
+                                        InputProps={{ disableUnderline: true, sx: { '& input': { p: 0, fontSize: '0.9rem' } } }}
+                                    />
+                                </Box>
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5, fontSize: '0.75rem' }}>
+                                        Time
+                                    </Typography>
+                                    <TextField
+                                        type="time"
+                                        fullWidth
+                                        value={editedTransaction.time}
+                                        onChange={(e) => handleFieldChange('time', e.target.value)}
+                                        variant="standard"
+                                        InputProps={{ disableUnderline: true, sx: { '& input': { p: 0, fontSize: '0.9rem' } } }}
+                                    />
+                                </Box>
+                                <Button 
+                                    size="small" 
+                                    variant="contained" 
+                                    onClick={() => setDateTimeAnchor(null)}
+                                    sx={{ mt: 0.5 }}
+                                >
+                                    Done
+                                </Button>
+                            </Stack>
+                        </Popover>
                     </Box>
                 </Stack>
             </Box>
 
-            {/* Card 2: Account, Is Expense, Is Regular (inline) */}
-            <Box sx={{ bgcolor: 'background.paper', p: 2, borderRadius: 3, mb: 2, boxShadow: 'none', border: '1px solid', borderColor: 'divider' }}>
-                <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} justifyContent="space-between" spacing={2}>
+            {/* Card 2: Account, Is Expense, Is Irregular (inline) */}
+            <Box sx={{ bgcolor: 'background.paper', p: 2, borderRadius: 3, mb: 2, boxShadow: 'none', border: '1px solid', borderColor: 'divider', overflow: 'hidden' }}>
+                <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} justifyContent="space-between" spacing={1.5} flexWrap="wrap">
                     {/* Account (editable) */}
-                    <Box sx={{ minWidth: 200, flex: 1, cursor: editingKey === 'account' ? 'auto' : 'text' }} onClick={editingKey !== 'account' ? () => setEditingKey('account') : undefined}>
+                    <Box sx={{ minWidth: 0, flex: { xs: '1 1 100%', sm: '1 1 auto' }, cursor: editingKey === 'account' ? 'auto' : 'text' }} onClick={editingKey !== 'account' ? () => setEditingKey('account') : undefined}>
                         {editingKey === 'account' ? (
                             <TextField
                                 fullWidth
@@ -191,9 +270,9 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
                     </Box>
 
                     {/* Inline Toggles */}
-                    <Stack direction="row" spacing={3} alignItems="center">
-                        <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography variant="body2" color={editedTransaction.expense === 'Yes' ? 'error.main' : 'text.secondary'}>
+                    <Stack direction="row" spacing={{ xs: 1.5, sm: 2 }} alignItems="center" flexWrap="nowrap">
+                        <Stack direction="row" spacing={0.5} alignItems="center">
+                            <Typography variant="body2" sx={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }} color={editedTransaction.expense === 'Yes' ? 'error.main' : 'text.secondary'}>
                                 Is Expense
                             </Typography>
                             <Switch
@@ -203,14 +282,14 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
                                 size="small"
                             />
                         </Stack>
-                        <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography variant="body2" color={editedTransaction.irregularSpends === 'Yes' ? 'text.secondary' : 'success.main'}>
-                                Is Regular
+                        <Stack direction="row" spacing={0.5} alignItems="center">
+                            <Typography variant="body2" sx={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }} color={editedTransaction.irregularSpends === 'Yes' ? 'warning.main' : 'text.secondary'}>
+                                Is Irregular
                             </Typography>
                             <Switch
-                                checked={editedTransaction.irregularSpends !== 'Yes'}
-                                onChange={(e) => handleFieldChange('irregularSpends', e.target.checked ? null : 'Yes')}
-                                color="success"
+                                checked={editedTransaction.irregularSpends === 'Yes'}
+                                onChange={(e) => handleFieldChange('irregularSpends', e.target.checked ? 'Yes' : null)}
+                                color="warning"
                                 size="small"
                             />
                         </Stack>
