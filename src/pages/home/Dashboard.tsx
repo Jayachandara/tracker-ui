@@ -24,29 +24,15 @@ const Dashboard = (): ReactElement => {
     >
       <Grid size={3.5}>
         <MonthlyTracking />
-        {/* <TransactionRecords/> */}
       </Grid>
       <Grid size={4.5} >
          <Stack direction={{ sm: 'column' }} gap={3.75}>
             <OverView />
           </Stack>
       </Grid>
-
        <Grid size={2.5}>
          <SaleInfoCards />
       </Grid>
-      
-      
-      {/* <Grid xs={12} lg={4}>
-        <Stack
-          direction={{ xs: 'column', sm: 'row', lg: 'column' }}
-          gap={3.75}
-          width={1}
-        >
-          <NewCustomers />
-          <BuyersProfile />
-        </Stack>
-      </Grid> */}
     </Grid>
   );
 };

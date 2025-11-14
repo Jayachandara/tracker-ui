@@ -8,7 +8,7 @@ import StyledTabs from "components/ui/StyledTabs";
 import StyledTab from "components/ui/StyledTab";
 import Expenses from "./Expenses/Expenses";
 
-const AllTrasanctions = () => {
+const MonthlyTracking = () => {
 
     const theme = useTheme();
     const [value, setValue] = useState(0);
@@ -84,7 +84,7 @@ const AllTrasanctions = () => {
 }
 
 
-export default AllTrasanctions;
+export default MonthlyTracking;
 
 interface TabPanelProps {
     children?: React.ReactNode;
