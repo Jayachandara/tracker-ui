@@ -190,7 +190,7 @@ const TabPanel = (props: TabPanelProps) => {
             const el = containerRef.current;
             if (!el) return;
             const top = el.getBoundingClientRect().top;
-            const available = window.innerHeight - top + 20; // bottom buffer
+            const available = window.innerHeight - top ; // bottom buffer
             setMaxHeight(available > 150 ? Math.floor(available) : 150);
         }
         updateHeight();
@@ -211,7 +211,7 @@ const TabPanel = (props: TabPanelProps) => {
                 <Box sx={{ p: 1 }}>
                     <SimpleBar
                         className={!globalShow ? 'simplebar-hidden-scrollbar' : undefined}
-                        style={{ maxHeight: maxHeight ? `${maxHeight}px` : '65vh' }}
+                        style={{height: 570/* , maxHeight: maxHeight ? `${maxHeight}px` : '65vh' */ }}
                     >
                         <Box sx={{ p: 1.5 }}>{children}</Box>
                     </SimpleBar>

@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography, TextField, Select, MenuItem, Button, Switch, Popover } from "@mui/material";
+import { Box, IconButton, Stack, Typography, TextField, Button, Switch, Popover } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import { TransactionDTO } from 'domain/transactions/types';
@@ -15,6 +15,8 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
     const [editedTransaction, setEditedTransaction] = useState<TransactionDTO>({ ...transaction });
     const [editingKey, setEditingKey] = useState<null | 'amount' | 'place' | 'datetime' | 'account' | 'tags' | 'note'>(null);
     const [dateTimeAnchor, setDateTimeAnchor] = useState<HTMLElement | null>(null);
+    const [categoryAnchor, setCategoryAnchor] = useState<HTMLElement | null>(null);
+    const [newCategoryText, setNewCategoryText] = useState<string>('');
 
     const formatDateTime = (dateStr: string, timeStr: string) => {
         const date = new Date(dateStr);
@@ -136,49 +138,172 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
                 {/* Footer: Category (left) and Date & Time (right) */}
                 <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mt: 1 }}>
                     {/* Category (left) */}
-                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
-                        <Select
-                            value={editedTransaction.category || ''}
-                            onChange={(e) => handleFieldChange('category', e.target.value)}
-                            variant="standard"
-                            disableUnderline
-                            sx={{
-                                bgcolor: categoryConfig.bgColor,
-                                color: categoryConfig.color,
-                                borderRadius: 2.5,
-                                px: 2,
-                                py: 0.75,
-                                '& .MuiSelect-select': { 
-                                    p: 0, 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    gap: 0.75,
-                                    fontWeight: 600
-                                },
+                    <Box 
+                        sx={{ 
+                            display: 'inline-flex', 
+                            alignItems: 'center',
+                            bgcolor: categoryConfig.bgColor,
+                            color: categoryConfig.color,
+                            borderRadius: 2.5,
+                            px: 2,
+                            py: 0.75,
+                            cursor: 'pointer'
+                        }}
+                        onClick={(e) => setCategoryAnchor(e.currentTarget)}
+                    >
+                        <Stack direction="row" alignItems="center" spacing={0.75}>
+                            {CategoryIcon && <CategoryIcon sx={{ fontSize: 20 }} />}
+                            <Typography sx={{ fontSize: '0.95rem', fontWeight: 600 }}>
+                                {editedTransaction.category || 'Uncategorized'}
+                            </Typography>
+                        </Stack>
+                    </Box>
+
+                    <Popover
+                        open={Boolean(categoryAnchor)}
+                        anchorEl={categoryAnchor}
+                        onClose={() => setCategoryAnchor(null)}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                        slotProps={{
+                            paper: {
+                                sx: {
+                                    mt: 1,
+                                    p: 1.5,
+                                    width: 270,
+                                    maxHeight: 350,
+                                    borderRadius: 3,
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }
+                            }
+                        }}
+                    >
+                        <TextField
+                            placeholder="Add new category..."
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                            value={newCategoryText}
+                            onChange={(e) => setNewCategoryText(e.target.value)}
+                            sx={{ mb: 1.5, flexShrink: 0 }}
+                            InputProps={{
+                                endAdornment: newCategoryText.trim() && (
+                                    <Button
+                                        size="small"
+                                        onClick={() => {
+                                            const newCategory = newCategoryText.trim().toUpperCase();
+                                            if (newCategory) {
+                                                handleFieldChange('category', newCategory);
+                                                setNewCategoryText('');
+                                                setCategoryAnchor(null);
+                                            }
+                                        }}
+                                        sx={{ minWidth: 'auto', px: 1.5 }}
+                                    >
+                                        Save
+                                    </Button>
+                                )
                             }}
-                            renderValue={(value) => (
-                                <Stack direction="row" alignItems="center" spacing={0.75}>
-                                    {CategoryIcon && <CategoryIcon sx={{ fontSize: 20 }} />}
-                                    <Typography sx={{ fontSize: '0.95rem', fontWeight: 600 }}>
-                                        {value || 'Uncategorized'}
-                                    </Typography>
-                                </Stack>
-                            )}
-                        >
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                    const newCategory = newCategoryText.trim().toUpperCase();
+                                    if (newCategory) {
+                                        handleFieldChange('category', newCategory);
+                                        setNewCategoryText('');
+                                        setCategoryAnchor(null);
+                                    }
+                                }
+                            }}
+                        />
+                        <Box sx={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(3, 1fr)', 
+                            gap: 0.75, 
+                            overflow: 'auto',
+                            p: 0.75,
+                            '&::-webkit-scrollbar': {
+                                display: 'none'
+                            },
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
+                        }}>
                             {categories.map((cat) => {
                                 const catConfig = getCategoryConfig(cat);
                                 const CatIcon = catConfig.icon;
+                                const isSelected = editedTransaction.category === cat;
                                 return (
-                                    <MenuItem key={cat} value={cat}>
-                                        <Stack direction="row" alignItems="center" spacing={1}>
-                                            {CatIcon && <CatIcon sx={{ fontSize: 18 }} />}
-                                            <Typography>{cat}</Typography>
-                                        </Stack>
-                                    </MenuItem>
+                                    <Box
+                                        key={cat}
+                                        onClick={() => {
+                                            handleFieldChange('category', cat);
+                                            setCategoryAnchor(null);
+                                        }}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            p: 0.75,
+                                            borderRadius: 1.5,
+                                            bgcolor: isSelected ? catConfig.bgColor : 'background.paper',
+                                            border: '1px solid',
+                                            borderColor: isSelected ? catConfig.color : 'divider',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.15s ease-in-out',
+                                            position: 'relative',
+                                            '&:hover': {
+                                                bgcolor: catConfig.bgColor,
+                                                borderColor: catConfig.color,
+                                                transform: 'scale(1.03)',
+                                                zIndex: 1,
+                                            }
+                                        }}
+                                    >
+                                        {CatIcon ? (
+                                            <CatIcon sx={{ fontSize: 28, color: catConfig.color, mb: 0.25 }} />
+                                        ) : (
+                                            <Box
+                                                sx={{
+                                                    width: 28,
+                                                    height: 28,
+                                                    borderRadius: '50%',
+                                                    bgcolor: catConfig.bgColor,
+                                                    border: `2px solid ${catConfig.color}`,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    mb: 0.25,
+                                                }}
+                                            >
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: '0.75rem',
+                                                        fontWeight: 700,
+                                                        color: catConfig.color,
+                                                    }}
+                                                >
+                                                    {cat.charAt(0).toUpperCase()}
+                                                </Typography>
+                                            </Box>
+                                        )}
+                                        <Typography 
+                                            sx={{ 
+                                                fontSize: '0.5rem', 
+                                                fontWeight: isSelected ? 600 : 500,
+                                                color: isSelected ? catConfig.color : 'text.primary',
+                                                textAlign: 'center',
+                                                lineHeight: 1,
+                                            }}
+                                        >
+                                            {cat}
+                                        </Typography>
+                                    </Box>
                                 );
                             })}
-                        </Select>
-                    </Box>
+                        </Box>
+                    </Popover>
 
                     {/* Date & Time (right) */}
                     <Box sx={{ flex: 1, textAlign: 'right' }}>
