@@ -1,7 +1,9 @@
 import { AppBar, Box, Grid, Stack, Typography, useTheme } from "@mui/material";
 import SimpleBar from 'simplebar-react';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useScrollbar } from 'providers/ScrollbarProvider.tsx';
+import { trans } from "core/api/mock/transactions-data";
+import { currencyFormat } from 'core/utils/format-functions';
 import Transactions from "./Transactions";
 import StyledTabs from "theme/styles/StyledTabs";
 import StyledTab from "theme/styles/StyledTab";
@@ -55,6 +57,23 @@ const MonthlyTracking = () => {
         setCategoryFilter(null);
     };
 
+    const { totalIncome, totalExpenses } = useMemo(() => {
+        const filtered = trans.filter(tran => {
+            const tranDate = new Date(tran.date);
+            return tranDate >= dateRange.start && tranDate <= dateRange.end;
+        });
+        
+        const income = filtered
+            .filter(tran => tran.income === 'Yes')
+            .reduce((sum, tran) => sum + tran.amount, 0);
+        
+        const expenses = filtered
+            .filter(tran => tran.expense === 'Yes')
+            .reduce((sum, tran) => sum + tran.amount, 0);
+        
+        return { totalIncome: income, totalExpenses: expenses };
+    }, [dateRange]);
+
     return (
         <Stack
             bgcolor="background.paper"
@@ -99,6 +118,26 @@ const MonthlyTracking = () => {
                     </StyledTabs>
                 </AppBar>
                 <TabPanel value={value} index={0} dir={theme.direction}>
+                    <Box sx={{ mb: 2, p: 2, bgcolor: 'background.default', borderRadius: 2 }}>
+                        <Stack direction="row" spacing={2} justifyContent="space-around">
+                            <Stack alignItems="center">
+                                <Typography variant="body2" color="text.secondary">
+                                    Total Income
+                                </Typography>
+                                <Typography variant="h6" color="success.main" fontWeight={600}>
+                                    {currencyFormat(totalIncome)}
+                                </Typography>
+                            </Stack>
+                            <Stack alignItems="center">
+                                <Typography variant="body2" color="text.secondary">
+                                    Total Expenses
+                                </Typography>
+                                <Typography variant="h6" color="error.main" fontWeight={600}>
+                                    {currencyFormat(totalExpenses)}
+                                </Typography>
+                            </Stack>
+                        </Stack>
+                    </Box>
                     <Transactions startDate={dateRange.start} endDate={dateRange.end} categoryFilter={categoryFilter} />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
@@ -114,7 +153,7 @@ const MonthlyTracking = () => {
                     )}
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
-                    Item Three
+                    <Transactions startDate={dateRange.start} endDate={dateRange.end} othersOnly />
                 </TabPanel>
             </Box>
         </Stack>

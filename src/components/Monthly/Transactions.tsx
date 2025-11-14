@@ -12,17 +12,19 @@ interface TransactionsProps {
     endDate: Date;
     categoryFilter?: string | null;
     onBack?: () => void;
+    othersOnly?: boolean;
 }
 
-const Transactions = ({ startDate, endDate, categoryFilter, onBack }: TransactionsProps) => {
+const Transactions = ({ startDate, endDate, categoryFilter, onBack, othersOnly }: TransactionsProps) => {
     const filteredTransactions = useMemo(() => {
         return trans.filter(tran => {
             const tranDate = new Date(tran.date);
             const inRange = tranDate >= startDate && tranDate <= endDate;
             const byCategory = !categoryFilter || (tran.category ?? 'UNCATEGORIZED') === categoryFilter;
-            return inRange && byCategory;
+            const isOther = othersOnly ? (tran.expense !== 'Yes' && tran.income !== 'Yes') : true;
+            return inRange && byCategory && isOther;
         });
-    }, [startDate, endDate, categoryFilter]);
+    }, [startDate, endDate, categoryFilter, othersOnly]);
 
     return (
         <Box>
