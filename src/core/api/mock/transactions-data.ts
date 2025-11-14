@@ -2,6 +2,8 @@ import { TransactionDTO } from "domain/transactions/types";
 
 export const trans: TransactionDTO[] = [
   {
+
+    "id": 1,
     "date": "2025-11-01T00:00:00",
     "time": "06:08:00",
     "place": "MEDABALMI SURYA GANESH",
@@ -16,6 +18,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 2,
     "date": "2025-11-01T00:00:00",
     "time": "06:47:00",
     "place": "A/C TRANSFER",
@@ -30,6 +34,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 3,
     "date": "2025-11-01T00:00:00",
     "time": "06:47:00",
     "place": "NANDANA JAYACHANDARARAO",
@@ -41,9 +47,12 @@ export const trans: TransactionDTO[] = [
     "irregularSpends": null,
     "category": "TRANSFER",
     "tags": null,
-    "note": null
+    "note": null,
+    "isReimbersable": true
   },
   {
+
+    "id": 4,
     "date": "2025-11-01T00:00:00",
     "time": "06:48:00",
     "place": "ATM",
@@ -58,6 +67,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 5,
     "date": "2025-11-01T00:00:00",
     "time": "07:38:00",
     "place": "ARLI SRINIVAS",
@@ -72,6 +83,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 6,
     "date": "2025-11-01T00:00:00",
     "time": "11:46:00",
     "place": "BHARATPE9O0Q7D2H9T390042@YESBANKLTD",
@@ -86,6 +99,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 7,
     "date": "2025-11-01T00:00:00",
     "time": "14:26:00",
     "place": "Q122391800@YBL",
@@ -100,6 +115,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 8,
     "date": "2025-11-01T00:00:00",
     "time": "15:02:00",
     "place": "ORBGEN TECHNOLOGIES",
@@ -114,6 +131,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 9,
     "date": "2025-11-01T00:00:00",
     "time": "15:36:00",
     "place": "Q094966857@YBL",
@@ -128,6 +147,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 10,
     "date": "2025-11-01T00:00:00",
     "time": "22:05:00",
     "place": "PVR INOX LIMITED",
@@ -142,6 +163,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 11,
     "date": "2025-11-02T00:00:00",
     "time": "00:05:00",
     "place": "PVR INOX LIMITED",
@@ -156,6 +179,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 12,
     "date": "2025-11-02T00:00:00",
     "time": "00:07:00",
     "place": "PVR INOX LIMITED",
@@ -170,6 +195,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 13,
     "date": "2025-11-02T00:00:00",
     "time": "11:38:00",
     "place": "JAYAHDFC@YBL",
@@ -184,6 +211,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 14,
     "date": "2025-11-02T00:00:00",
     "time": "11:38:00",
     "place": "JAYACHANDARARAO N",
@@ -195,9 +224,12 @@ export const trans: TransactionDTO[] = [
     "irregularSpends": null,
     "category": "TRANSFER",
     "tags": null,
-    "note": null
+    "note": null,
+    "isReimbersable": true
   },
   {
+
+    "id": 15,
     "date": "2025-11-02T00:00:00",
     "time": "17:20:00",
     "place": "CREDIT",
@@ -212,6 +244,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 16,
     "date": "2025-11-02T00:00:00",
     "time": "17:22:00",
     "place": "JAYAHDFC@YBL",
@@ -226,6 +260,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 17,
     "date": "2025-11-02T00:00:00",
     "time": "17:22:00",
     "place": "JAYACHANDARARAO N",
@@ -237,9 +273,12 @@ export const trans: TransactionDTO[] = [
     "irregularSpends": null,
     "category": "TRANSFER",
     "tags": null,
-    "note": null
+    "note": null,
+    "isReimbersable": true
   },
   {
+
+    "id": 18,
     "date": "2025-11-02T00:00:00",
     "time": "20:45:00",
     "place": "CREDIT CARD BILL PAYMENT",
@@ -254,6 +293,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 19,
     "date": "2025-11-02T00:00:00",
     "time": "20:45:00",
     "place": "CRED CLUB",
@@ -268,6 +309,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 20,
     "date": "2025-11-02T00:00:00",
     "time": "20:45:00",
     "place": "CREDIT CARD BILL PAYMENT",
@@ -282,6 +325,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 21,
     "date": "2025-11-02T00:00:00",
     "time": "20:45:00",
     "place": "CRED CLUB",
@@ -296,6 +341,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 22,
     "date": "2025-11-02T00:00:00",
     "time": "20:56:00",
     "place": "BHARATPE.9U0Z0H7S3S641679@FBPE",
@@ -310,6 +357,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 23,
     "date": "2025-11-02T00:00:00",
     "time": "20:58:00",
     "place": "PAYTMQR6PHFDO@PTYS",
@@ -324,6 +373,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 24,
     "date": "2025-11-02T00:00:00",
     "time": "21:19:00",
     "place": "OMBK.AAEM6885018WW6GI2LE9@MBK",
@@ -338,6 +389,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 25,
     "date": "2025-11-02T00:00:00",
     "time": "22:13:00",
     "place": "OMBK.AAEM6885018WW6GI2LE9@MBK",
@@ -352,6 +405,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 26,
     "date": "2025-11-02T00:00:00",
     "time": "22:25:00",
     "place": "CHINAGANTYADAGAJUWAK.61857406@HDFCBANK",
@@ -366,6 +421,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 27,
     "date": "2025-11-02T00:00:00",
     "time": "22:27:00",
     "place": "CHINAGANTYADAGAJUWAK.61857406@HDFCBANK",
@@ -380,6 +437,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 28,
     "date": "2025-11-02T00:00:00",
     "time": "22:37:00",
     "place": "PAYTM.D10288860312@PTY",
@@ -394,6 +453,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 29,
     "date": "2025-11-03T00:00:00",
     "time": "09:09:00",
     "place": "Q396892969@YBL",
@@ -408,6 +469,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 30,
     "date": "2025-11-03T00:00:00",
     "time": "11:12:00",
     "place": "SALARY CREDIT",
@@ -422,6 +485,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 31,
     "date": "2025-11-03T00:00:00",
     "time": "11:16:00",
     "place": "WIFE REMAINING AMOUNT",
@@ -436,6 +501,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 32,
     "date": "2025-11-03T00:00:00",
     "time": "11:16:00",
     "place": "DHUSYANTH EMI",
@@ -450,6 +517,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 33,
     "date": "2025-11-03T00:00:00",
     "time": "12:21:00",
     "place": "NIMMANA SIVA",
@@ -464,6 +533,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 34,
     "date": "2025-11-03T00:00:00",
     "time": "12:28:00",
     "place": "PAYTM.S1D84XJ@PTY",
@@ -478,6 +549,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 35,
     "date": "2025-11-03T00:00:00",
     "time": "12:38:00",
     "place": "THOTAKURA LAKSHMI KANTHAM",
@@ -492,6 +565,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 36,
     "date": "2025-11-03T00:00:00",
     "time": "12:53:00",
     "place": "NANDANA JAYACHANDARA RAO",
@@ -503,9 +578,12 @@ export const trans: TransactionDTO[] = [
     "irregularSpends": null,
     "category": "TRANSFER",
     "tags": null,
-    "note": null
+    "note": null,
+    "isReimbersable": true
   },
   {
+
+    "id": 37,
     "date": "2025-11-03T00:00:00",
     "time": "12:53:00",
     "place": "8331961238-4@IBL",
@@ -520,6 +598,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 38,
     "date": "2025-11-03T00:00:00",
     "time": "12:56:00",
     "place": "DSP FINANCE PRIVATE LIMITED",
@@ -534,6 +614,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 39,
     "date": "2025-11-03T00:00:00",
     "time": "20:32:00",
     "place": "GOOGLE PLAY",
@@ -548,6 +630,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 40,
     "date": "2025-11-03T00:00:00",
     "time": "22:21:00",
     "place": "ELECTRICITY BILL",
@@ -562,6 +646,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 41,
     "date": "2025-11-04T00:00:00",
     "time": "00:44:00",
     "place": "GOIBIBO",
@@ -576,6 +662,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 42,
     "date": "2025-11-04T00:00:00",
     "time": "01:07:00",
     "place": "HARIBHANUPRASADNANDARAPU@YBL",
@@ -590,6 +678,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 43,
     "date": "2025-11-04T00:00:00",
     "time": "09:06:00",
     "place": "CRED CLUB",
@@ -604,6 +694,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 44,
     "date": "2025-11-04T00:00:00",
     "time": "09:17:00",
     "place": "CREDIT CARD BILL PAYMENT",
@@ -618,6 +710,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 45,
     "date": "2025-11-04T00:00:00",
     "time": "10:56:00",
     "place": "Q763408484@YBL",
@@ -632,6 +726,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 46,
     "date": "2025-11-04T00:00:00",
     "time": "10:56:00",
     "place": "Q763408484@YBL",
@@ -646,6 +742,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 47,
     "date": "2025-11-04T00:00:00",
     "time": "10:59:00",
     "place": "Q906349859@YBL",
@@ -660,6 +758,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 48,
     "date": "2025-11-04T00:00:00",
     "time": "20:12:00",
     "place": "MR BABOLI PRASAD GUPTA",
@@ -674,6 +774,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 49,
     "date": "2025-11-04T00:00:00",
     "time": "20:27:00",
     "place": "PASALA VENKATESH",
@@ -688,6 +790,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 50,
     "date": "2025-11-04T00:00:00",
     "time": "21:00:00",
     "place": "GROFERS",
@@ -702,6 +806,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 51,
     "date": "2025-11-04T00:00:00",
     "time": "23:52:00",
     "place": "WATCH MAN",
@@ -716,6 +822,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 52,
     "date": "2025-11-05T00:00:00",
     "time": "15:18:00",
     "place": "NET BANKING",
@@ -730,6 +838,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 53,
     "date": "2025-11-05T00:00:00",
     "time": "17:05:00",
     "place": "MZ720VMWO",
@@ -744,6 +854,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 54,
     "date": "2025-11-05T00:00:00",
     "time": "17:12:00",
     "place": "PASALA VENKATESH",
@@ -758,6 +870,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 55,
     "date": "2025-11-05T00:00:00",
     "time": "17:15:00",
     "place": "GANDIPILLI VIJAYA KU",
@@ -772,6 +886,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 56,
     "date": "2025-11-05T00:00:00",
     "time": "17:25:00",
     "place": "FLIGHT TICKETS",
@@ -786,6 +902,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 57,
     "date": "2025-11-05T00:00:00",
     "time": "22:05:00",
     "place": "MEDECINS SANS FRONTIERES",
@@ -800,6 +918,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 58,
     "date": "2025-11-06T00:00:00",
     "time": "09:08:00",
     "place": "JANAPALA HARI DURGA BHAVANI",
@@ -814,6 +934,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 59,
     "date": "2025-11-06T00:00:00",
     "time": "09:48:00",
     "place": "MIVTWTT4S",
@@ -828,6 +950,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 60,
     "date": "2025-11-06T00:00:00",
     "time": "09:51:00",
     "place": "GANDIPILLI VIJAYA KU",
@@ -842,6 +966,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 61,
     "date": "2025-11-06T00:00:00",
     "time": "16:59:00",
     "place": "NANDARAPU HARI BHANU PRASAD",
@@ -853,9 +979,12 @@ export const trans: TransactionDTO[] = [
     "irregularSpends": null,
     "category": "TRANSFER",
     "tags": null,
-    "note": null
+    "note": null,
+    "isReimbersable": true
   },
   {
+
+    "id": 62,
     "date": "2025-11-06T00:00:00",
     "time": "21:55:00",
     "place": "M1S2LJ7VIUHR",
@@ -870,6 +999,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 63,
     "date": "2025-11-06T00:00:00",
     "time": "22:00:00",
     "place": "M23MCL3V3RKQL",
@@ -884,6 +1015,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 64,
     "date": "2025-11-06T00:00:00",
     "time": "22:43:00",
     "place": "CASHBACK",
@@ -898,6 +1031,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 65,
     "date": "2025-11-07T00:00:00",
     "time": "09:20:00",
     "place": "BLINKIT",
@@ -912,6 +1047,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 66,
     "date": "2025-11-07T00:00:00",
     "time": "10:34:00",
     "place": "CHEQUE",
@@ -926,6 +1063,8 @@ export const trans: TransactionDTO[] = [
     "note": "EMI 155825290 Chq S1558252900141 1125155825290."
   },
   {
+
+    "id": 67,
     "date": "2025-11-07T00:00:00",
     "time": "11:09:00",
     "place": "MIVTWTT4S",
@@ -940,6 +1079,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 68,
     "date": "2025-11-07T00:00:00",
     "time": "13:10:00",
     "place": "CHEQUE",
@@ -954,6 +1095,8 @@ export const trans: TransactionDTO[] = [
     "note": "EMI 456092386 Chq S4560923860341 1125456092386."
   },
   {
+
+    "id": 69,
     "date": "2025-11-07T00:00:00",
     "time": "14:15:00",
     "place": "P.V.S.GANESH29@YBL",
@@ -968,6 +1111,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 70,
     "date": "2025-11-07T00:00:00",
     "time": "15:25:00",
     "place": "GOOGLE PLAY",
@@ -982,6 +1127,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 71,
     "date": "2025-11-07T00:00:00",
     "time": "20:01:00",
     "place": "NANDANA JAYACHANDARARAO",
@@ -993,9 +1140,12 @@ export const trans: TransactionDTO[] = [
     "irregularSpends": null,
     "category": "TRANSFER",
     "tags": null,
-    "note": null
+    "note": null,
+    "isReimbersable": true
   },
   {
+
+    "id": 72,
     "date": "2025-11-07T00:00:00",
     "time": "20:02:00",
     "place": "AXIS BANK L",
@@ -1010,6 +1160,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 73,
     "date": "2025-11-07T00:00:00",
     "time": "20:09:00",
     "place": "FLAT MAINTAINANCE",
@@ -1024,6 +1176,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 74,
     "date": "2025-11-07T00:00:00",
     "time": "20:20:00",
     "place": "M1S2LJ7VIUHR",
@@ -1038,6 +1192,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 75,
     "date": "2025-11-07T00:00:00",
     "time": "20:27:00",
     "place": "MR BABOLI PRASAD GUPTA",
@@ -1052,6 +1208,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 76,
     "date": "2025-11-07T00:00:00",
     "time": "20:52:00",
     "place": "CRED",
@@ -1066,6 +1224,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 77,
     "date": "2025-11-07T00:00:00",
     "time": "20:52:00",
     "place": "CREDIT CARD BILL PAYMENT",
@@ -1080,6 +1240,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 78,
     "date": "2025-11-08T00:00:00",
     "time": "11:50:00",
     "place": "M22FYT0W6U8XA",
@@ -1094,6 +1256,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 79,
     "date": "2025-11-08T00:00:00",
     "time": "12:07:00",
     "place": "NIMMANA SIVA",
@@ -1108,6 +1272,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 80,
     "date": "2025-11-08T00:00:00",
     "time": "14:34:00",
     "place": "TARIGA MUKUNDA UMESH",
@@ -1122,6 +1288,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 81,
     "date": "2025-11-08T00:00:00",
     "time": "15:30:00",
     "place": "NET BANKING",
@@ -1136,6 +1304,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 82,
     "date": "2025-11-08T00:00:00",
     "time": "16:11:00",
     "place": "M23L7X6MW0UA2",
@@ -1150,6 +1320,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 83,
     "date": "2025-11-08T00:00:00",
     "time": "21:35:00",
     "place": "DMART",
@@ -1164,6 +1336,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 84,
     "date": "2025-11-09T00:00:00",
     "time": "09:14:00",
     "place": "M4BA5LSVY",
@@ -1178,6 +1352,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 85,
     "date": "2025-11-09T00:00:00",
     "time": "09:15:00",
     "place": "M23MCL3V3RKQL",
@@ -1192,6 +1368,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 86,
     "date": "2025-11-09T00:00:00",
     "time": "12:36:00",
     "place": "GROFERS",
@@ -1206,6 +1384,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 87,
     "date": "2025-11-09T00:00:00",
     "time": "17:04:00",
     "place": "CREDIT CARD BILL PAYMENT",
@@ -1220,6 +1400,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 88,
     "date": "2025-11-09T00:00:00",
     "time": "18:30:00",
     "place": "M22VWJ5UAEYPM",
@@ -1234,6 +1416,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 89,
     "date": "2025-11-09T00:00:00",
     "time": "20:21:00",
     "place": "CMRGWKFC",
@@ -1248,6 +1432,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 90,
     "date": "2025-11-09T00:00:00",
     "time": "20:45:00",
     "place": "BIGTREE ENTERTAINMENT",
@@ -1262,6 +1448,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 91,
     "date": "2025-11-09T00:00:00",
     "time": "21:02:00",
     "place": "CMRGWKFC",
@@ -1276,6 +1464,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 92,
     "date": "2025-11-09T00:00:00",
     "time": "21:36:00",
     "place": "PACHIKOLLA SURESH",
@@ -1290,6 +1480,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 93,
     "date": "2025-11-09T00:00:00",
     "time": "21:52:00",
     "place": "BURGER KING",
@@ -1304,6 +1496,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 94,
     "date": "2025-11-10T00:00:00",
     "time": "12:17:00",
     "place": "MIVTWTT4S",
@@ -1318,6 +1512,8 @@ export const trans: TransactionDTO[] = [
     "note": null
   },
   {
+
+    "id": 95,
     "date": "2025-11-10T00:00:00",
     "time": "15:34:00",
     "place": "SLEF",
@@ -1329,6 +1525,7 @@ export const trans: TransactionDTO[] = [
     "irregularSpends": null,
     "category": "TRANSFER",
     "tags": null,
-    "note": null
+    "note": null,
+    "isReimbersable": true
   }
 ]

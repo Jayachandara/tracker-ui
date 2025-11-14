@@ -3,6 +3,7 @@ import { TransactionType, TransactionCategory, PaginatedResponse, ApiResponse } 
 // ============ Legacy DTO Types (from dtos/transactions-dtos.ts) ============
 
 export type TransactionDTO = {
+  id: number;
   date: string;
   time: string;
   place: string;
@@ -15,6 +16,8 @@ export type TransactionDTO = {
   category: string | null;
   tags: string | null;
   note: string | null;
+  isReimbersable?: boolean;
+  reimbersedTranId?: number;
 };
 
 export type SpendsGroupDTO = "EMI" | "Regular Spends" | "Irregular Spends";
