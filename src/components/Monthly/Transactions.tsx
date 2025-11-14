@@ -1,4 +1,5 @@
-import { Avatar, Box, Divider, Grid, List, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, Divider, Grid, List, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ImageIcon from '@mui/icons-material/Image';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
@@ -9,18 +10,34 @@ import { useMemo } from 'react';
 interface TransactionsProps {
     startDate: Date;
     endDate: Date;
+    categoryFilter?: string | null;
+    onBack?: () => void;
 }
 
-const Transactions = ({ startDate, endDate }: TransactionsProps) => {
+const Transactions = ({ startDate, endDate, categoryFilter, onBack }: TransactionsProps) => {
     const filteredTransactions = useMemo(() => {
         return trans.filter(tran => {
             const tranDate = new Date(tran.date);
-            return tranDate >= startDate && tranDate <= endDate;
+            const inRange = tranDate >= startDate && tranDate <= endDate;
+            const byCategory = !categoryFilter || (tran.category ?? 'UNCATEGORIZED') === categoryFilter;
+            return inRange && byCategory;
         });
-    }, [startDate, endDate]);
+    }, [startDate, endDate, categoryFilter]);
 
     return (
         <Box>
+            {onBack && (
+                <Box sx={{ mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <IconButton color="primary" onClick={onBack} aria-label="Back" sx={{ ml: 0.5 }}>
+                        <ArrowBackIcon fontSize="medium" />
+                    </IconButton>
+                    {categoryFilter ? (
+                        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            {categoryFilter}
+                        </Typography>
+                    ) : null}
+                </Box>
+            )}
             <List
                 sx={{ width: '100%', bgcolor: 'background.paper' }}
                 component="nav"

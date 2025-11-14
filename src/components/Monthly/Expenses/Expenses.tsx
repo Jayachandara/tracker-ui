@@ -11,9 +11,10 @@ import ExpensesHeader from "./ExpensesHeader";
 interface ExpensesProps {
     startDate: Date;
     endDate: Date;
+    onCategoryClick?: (category: string) => void;
 }
 
-const Expenses = ({ startDate, endDate }: ExpensesProps) => {
+const Expenses = ({ startDate, endDate, onCategoryClick }: ExpensesProps) => {
 
     const filteredTransactions = useMemo(() => {
         return trans.filter(tran => {
@@ -43,7 +44,7 @@ const Expenses = ({ startDate, endDate }: ExpensesProps) => {
                 sx={{ width: '100%', bgcolor: 'background.paper' }}
                 component="nav"
             >
-                {spends.map(cat => <ListItemButton sx={{ border: '1px solid' + theme.palette.grey[400], borderRadius: '17px', marginBottom: '10px' }}>
+                {spends.map(cat => <ListItemButton onClick={() => onCategoryClick?.(cat.name)} sx={{ border: '1px solid' + theme.palette.grey[400], borderRadius: '17px', marginBottom: '10px' }}>
                     <ListItemAvatar>
                         <Avatar>
                             <ImageIcon />
