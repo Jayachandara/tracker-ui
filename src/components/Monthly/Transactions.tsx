@@ -1,10 +1,10 @@
 import { Avatar, Box, IconButton, Divider, Grid, List, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ImageIcon from '@mui/icons-material/Image';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
 import { trans } from "core/api/mock/transactions-data";
 import { currencyFormat, formatDateTime } from 'core/utils/format-functions';
+import { getCategoryConfig } from 'core/config/category-config';
 import { useMemo } from 'react';
 
 interface TransactionsProps {
@@ -42,12 +42,21 @@ const Transactions = ({ startDate, endDate, categoryFilter, onBack }: Transactio
                 sx={{ width: '100%', bgcolor: 'background.paper' }}
                 component="nav"
             >
-                {filteredTransactions.map((tran, index) => (
+                {filteredTransactions.map((tran, index) => {
+                    const categoryConfig = getCategoryConfig(tran.category);
+                    const CategoryIcon = categoryConfig.icon;
+                    
+                    return (
                     <Box key={`${tran.date}-${tran.place}-${index}`}>
                         <ListItemButton>
                     <ListItemAvatar>
-                        <Avatar>
-                            <ImageIcon />
+                        <Avatar sx={{ 
+                            bgcolor: categoryConfig.bgColor,
+                            color: categoryConfig.color,
+                            fontWeight: 600,
+                            fontSize: '1.2rem'
+                        }}>
+                            {CategoryIcon ? <CategoryIcon /> : categoryConfig.letter}
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary={tran.place} slotProps={{
@@ -76,7 +85,7 @@ const Transactions = ({ startDate, endDate, categoryFilter, onBack }: Transactio
                 </ListItemButton>
                       <Divider component="li" />
                     </Box>
-                ))}
+                )})}
             </List>
         </Box>
     )

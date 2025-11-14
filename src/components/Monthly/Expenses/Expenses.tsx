@@ -1,7 +1,7 @@
 import { Avatar, Box, Grid, List, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
-import ImageIcon from '@mui/icons-material/Image';
 import { trans } from "core/api/mock/transactions-data";
 import { currencyFormat } from "core/utils/format-functions";
+import { getCategoryConfig } from "core/config/category-config";
 import { useEffect, useMemo, useState } from "react";
 import { categoriseSpends, groupSpendsCategory } from "domain/transactions/services";
 import { SpendCategoryGroupDTO, SpendsGroupDTO } from "domain/transactions/types";
@@ -44,10 +44,24 @@ const Expenses = ({ startDate, endDate, onCategoryClick }: ExpensesProps) => {
                 sx={{ width: '100%', bgcolor: 'background.paper' }}
                 component="nav"
             >
-                {spends.map(cat => <ListItemButton onClick={() => onCategoryClick?.(cat.name)} sx={{ border: '1px solid' + theme.palette.grey[400], borderRadius: '17px', marginBottom: '10px' }}>
+                {spends.map(cat => {
+                    const categoryConfig = getCategoryConfig(cat.name);
+                    const CategoryIcon = categoryConfig.icon;
+                    
+                    return (
+                    <ListItemButton 
+                        key={cat.name}
+                        onClick={() => onCategoryClick?.(cat.name)} 
+                        sx={{ border: '1px solid' + theme.palette.grey[400], borderRadius: '17px', marginBottom: '10px' }}
+                    >
                     <ListItemAvatar>
-                        <Avatar>
-                            <ImageIcon />
+                        <Avatar sx={{
+                            bgcolor: categoryConfig.bgColor,
+                            color: categoryConfig.color,
+                            fontWeight: 600,
+                            fontSize: '1.2rem'
+                        }}>
+                            {CategoryIcon ? <CategoryIcon /> : categoryConfig.letter}
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary={cat.name} slotProps={{
@@ -72,7 +86,7 @@ const Expenses = ({ startDate, endDate, onCategoryClick }: ExpensesProps) => {
                         </Stack>
                     </Box>
                 </ListItemButton>
-                )}
+                )})}
             </List>
         </Box>
     )
