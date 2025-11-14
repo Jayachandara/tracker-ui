@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const IconButton: Components<Omit<Theme, 'components'>>['MuiIconButton'] = {
   defaultProps: {},
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       maxWidth: 40,
       maxHeight: 40,
       padding: theme.spacing(1.5),

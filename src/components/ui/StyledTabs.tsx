@@ -11,7 +11,7 @@ const GROUP_BORDER = "#d3d3d3ff";
 
 const StyledTabs = styled((props: StyledTabsProps) => (
     <Tabs {...props} TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }} />
-))(({ theme }) => ({
+))(({ theme: _ }: any) => ({
     backgroundColor: "#fff",
     padding: 6,               // tighter padding so the group border sits close
     border: `1px solid ${GROUP_BORDER}`,

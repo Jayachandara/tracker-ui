@@ -1,17 +1,17 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const TablePagination: Components<Omit<Theme, 'components'>>['MuiTablePagination'] = {
   defaultProps: {},
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       width: '100%',
       ':last-child': {
         borderRadius: theme.shape.borderRadius * 5,
       },
       borderRadius: theme.shape.borderRadius * 5,
     }),
-    toolbar: ({ theme }) => ({
+    toolbar: ({ theme }: any) => ({
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',

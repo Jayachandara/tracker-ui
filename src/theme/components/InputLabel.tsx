@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const InputLabel: Components<Omit<Theme, 'components'>>['MuiInputLabel'] = {
   defaultProps: {},
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       position: 'static',
       transform: 'none',
       transition: 'none',
@@ -14,7 +14,7 @@ const InputLabel: Components<Omit<Theme, 'components'>>['MuiInputLabel'] = {
         color: theme.palette.text.secondary,
       },
     }),
-    focused: ({ theme }) => ({
+    focused: ({ theme }: any) => ({
       color: theme.palette.text.secondary,
       position: 'static',
       transform: 'none',

@@ -1,13 +1,13 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const Tooltip: Components<Omit<Theme, 'components'>>['MuiTooltip'] = {
   defaultProps: {},
   styleOverrides: {
-    arrow: ({ theme }) => ({
+    arrow: ({ theme }: any) => ({
       color: theme.palette.common.black,
     }),
-    tooltip: ({ theme }) => ({
+    tooltip: ({ theme }: any) => ({
       backgroundColor: theme.palette.common.black,
     }),
   },

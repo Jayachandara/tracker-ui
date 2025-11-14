@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
-const Grid2: Components<Omit<Theme, 'components'>>['MuiGrid2'] = {
+const Grid2: Components<Omit<Theme, 'components'>>['MuiGrid'] = {
   defaultProps: {},
   styleOverrides: {
     root: () => ({

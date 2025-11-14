@@ -1,11 +1,11 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 import pxToRem from 'theme/functions/px-to-rem';
 
 const FilledInput: Components<Omit<Theme, 'components'>>['MuiFilledInput'] = {
   defaultProps: {},
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       borderRadius: 999,
       borderWidth: pxToRem(1),
       borderStyle: 'solid',
@@ -30,7 +30,7 @@ const FilledInput: Components<Omit<Theme, 'components'>>['MuiFilledInput'] = {
         border: 'none',
       },
     }),
-    focused: ({ theme }) => ({
+    focused: ({ theme }: any) => ({
       backgroundColor: theme.palette.action.focus,
     }),
     input: () => ({
@@ -47,13 +47,10 @@ const FilledInput: Components<Omit<Theme, 'components'>>['MuiFilledInput'] = {
         borderBottomRightRadius: 'initial',
       },
     }),
-    error: ({ theme }) => ({
+    error: ({ theme }: any) => ({
       borderColor: theme.palette.error.main,
     }),
-    adornedEnd: ({ theme }) => ({
-      color: theme.palette.common.black,
-    }),
-    inputAdornedEnd: ({ theme }) => ({
+    adornedEnd: ({ theme }: any) => ({
       color: theme.palette.common.black,
     }),
     multiline: () => ({

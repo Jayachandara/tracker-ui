@@ -1,12 +1,12 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const PaginationItem: Components<Omit<Theme, 'components'>>['MuiPaginationItem'] = {
   defaultProps: {
     selected: true,
   },
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       color: theme.palette.primary.main,
       fontSize: theme.typography.body1.fontSize,
       fontWeight: theme.typography.subtitle1.fontWeight,

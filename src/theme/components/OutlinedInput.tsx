@@ -1,5 +1,5 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 import pxToRem from 'theme/functions/px-to-rem';
 
 const OutlinedInput: Components<Omit<Theme, 'components'>>['MuiOutlinedInput'] = {
@@ -7,7 +7,7 @@ const OutlinedInput: Components<Omit<Theme, 'components'>>['MuiOutlinedInput'] =
     autoComplete: 'off',
   },
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       borderRadius: 999,
       borderWidth: pxToRem(1),
       borderStyle: 'solid',
@@ -20,7 +20,7 @@ const OutlinedInput: Components<Omit<Theme, 'components'>>['MuiOutlinedInput'] =
         width: 0,
       },
     }),
-    input: ({ theme }) => ({
+    input: ({ theme }: any) => ({
       paddingLeft: pxToRem(20),
       paddingTop: pxToRem(12),
       paddingBottom: pxToRem(12),
@@ -29,7 +29,7 @@ const OutlinedInput: Components<Omit<Theme, 'components'>>['MuiOutlinedInput'] =
         color: theme.palette.text.secondary,
       },
     }),
-    notchedOutline: ({ theme }) => ({
+    notchedOutline: ({ theme }: any) => ({
       borderColor: theme.palette.divider,
       '&:hover': {
         borderColor: theme.palette.primary.main,
@@ -38,10 +38,10 @@ const OutlinedInput: Components<Omit<Theme, 'components'>>['MuiOutlinedInput'] =
         borderColor: theme.palette.secondary.main,
       },
     }),
-    adornedEnd: ({ theme }) => ({
+    adornedEnd: ({ theme }: any) => ({
       color: theme.palette.common.black,
     }),
-    inputAdornedEnd: ({ theme }) => ({
+    inputAdornedEnd: ({ theme }: any) => ({
       color: theme.palette.common.black,
     }),
   },

@@ -1,11 +1,11 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const Pagination: Components<Omit<Theme, 'components'>>['MuiPagination'] = {
   defaultProps: {},
   styleOverrides: {
     root: ({}) => ({}),
-    ul: ({ theme }) => ({
+    ul: ({ theme }: any) => ({
       display: 'flex',
       gap: theme.spacing(1.125),
     }),

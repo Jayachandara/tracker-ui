@@ -1,7 +1,6 @@
-import { TypographyOptions } from '@mui/material/styles/createTypography';
 import pxToRem from './functions/px-to-rem';
 
-const typography: TypographyOptions = {
+const typography: any = {
   fontFamily: ['IBM Plex Sans', 'Poppins', 'sans-serif'].join(','),
   h1: {
     fontSize: pxToRem(40),

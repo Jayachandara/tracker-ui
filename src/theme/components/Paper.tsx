@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const Paper: Components<Omit<Theme, 'components'>>['MuiPaper'] = {
   defaultProps: {},
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       backgroundColor: theme.palette.background.paper,
     }),
   },

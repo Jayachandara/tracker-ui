@@ -6,7 +6,7 @@ const ListItem: Components<Omit<Theme, 'components'>>['MuiListItem'] = {
     disablePadding: true,
   },
   styleOverrides: {
-    root: ({ theme }: any) => ({
+    root: ({}: any) => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'start',

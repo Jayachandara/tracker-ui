@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const ListItemButton: Components<Omit<Theme, 'components'>>['MuiListItemButton'] = {
   defaultProps: {},
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       borderRadius: theme.shape.borderRadius * 2,
       display: 'flex',
       alignItems: 'center',

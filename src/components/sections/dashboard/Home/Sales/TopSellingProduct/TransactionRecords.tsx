@@ -1,20 +1,14 @@
-import { ChangeEvent, ReactElement, useMemo, useState } from 'react';
+import { ReactElement, useMemo } from 'react';
 import {
   Avatar,
   Divider,
-  InputAdornment,
-  LinearProgress,
   Link,
   Stack,
-  TextField,
   Tooltip,
   Typography,
-  debounce,
 } from '@mui/material';
-import { DataGrid, GridApi, GridColDef, GridSlots, useGridApiRef } from '@mui/x-data-grid';
-import IconifyIcon from 'components/base/IconifyIcon';
+import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
 import { DataRow, rows } from 'data/products';
-import CustomPagination from './CustomPagination';
 import { currencyFormat } from 'core/utils/format-functions';
 
 const columns: GridColDef<DataRow>[] = [
@@ -87,8 +81,7 @@ const columns: GridColDef<DataRow>[] = [
 ];
 
 const TransactionRecords = (): ReactElement => {
-  const apiRef = useGridApiRef<GridApi>();
-  const [search, setSearch] = useState('');
+  const apiRef = useGridApiRef();
 
   const visibleColumns = useMemo(
     () =>
@@ -106,20 +99,6 @@ const TransactionRecords = (): ReactElement => {
         }),
     [columns],
   );
-
-  const handleGridSearch = useMemo(() => {
-    return debounce((searchValue) => {
-      apiRef.current.setQuickFilterValues(
-        searchValue.split(' ').filter((word: any) => word !== ''),
-      );
-    }, 250);
-  }, [apiRef]);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const searchValue = event.currentTarget.value;
-    setSearch(searchValue);
-    handleGridSearch(searchValue);
-  };
 
   return (
     <Stack
@@ -178,10 +157,12 @@ const TransactionRecords = (): ReactElement => {
           }}
           pageSizeOptions={[5]} */
           onResize={() => {
-            apiRef.current.autosizeColumns({
-              includeOutliers: true,
-              expand: true,
-            });
+            if (apiRef.current) {
+              apiRef.current.autosizeColumns({
+                includeOutliers: true,
+                expand: true,
+              });
+            }
           }}
         /*   slots={{
             loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],

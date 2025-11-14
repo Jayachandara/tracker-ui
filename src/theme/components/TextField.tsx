@@ -1,5 +1,5 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 import pxToRem from 'theme/functions/px-to-rem';
 
 const TextField: Components<Omit<Theme, 'components'>>['MuiTextField'] = {

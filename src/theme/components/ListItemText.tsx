@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
-import { Components } from '@mui/material/styles/components';
+import { Components } from '@mui/material/styles';
 
 const ListItemText: Components<Omit<Theme, 'components'>>['MuiListItemText'] = {
   defaultProps: {},
   styleOverrides: {
-    primary: ({ theme }) => ({
+    primary: ({ theme }: any) => ({
       fontSize: theme.typography.subtitle1.fontSize,
       fontWeight: theme.typography.subtitle1.fontWeight,
       fontFamily: theme.typography.fontFamily,
