@@ -1,8 +1,9 @@
-import { Box, IconButton, Stack, Typography, TextField, Button, Switch, Popover } from "@mui/material";
+import { Box, IconButton, Stack, Typography, TextField, Button, Switch, Popover, Avatar } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import { TransactionDTO } from 'domain/transactions/types';
 import { getCategoryConfig } from 'core/config/category-config';
+import { getAccountConfig } from 'core/config/account-config';
 import { useState, useMemo } from 'react';
 
 interface TransactionEditProps {
@@ -13,9 +14,10 @@ interface TransactionEditProps {
 
 const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) => {
     const [editedTransaction, setEditedTransaction] = useState<TransactionDTO>({ ...transaction });
-    const [editingKey, setEditingKey] = useState<null | 'amount' | 'place' | 'datetime' | 'account' | 'tags' | 'note'>(null);
+    const [editingKey, setEditingKey] = useState<null | 'amount' | 'place' | 'datetime' | 'tags' | 'note'>(null);
     const [dateTimeAnchor, setDateTimeAnchor] = useState<HTMLElement | null>(null);
     const [categoryAnchor, setCategoryAnchor] = useState<HTMLElement | null>(null);
+    const [accountAnchor, setAccountAnchor] = useState<HTMLElement | null>(null);
     const [newCategoryText, setNewCategoryText] = useState<string>('');
 
     const formatDateTime = (dateStr: string, timeStr: string) => {
@@ -41,6 +43,7 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
 
     const categoryConfig = getCategoryConfig(editedTransaction.category);
     const CategoryIcon = categoryConfig.icon;
+    const accountConfig = getAccountConfig(editedTransaction.account);
 
     const hasChanges = useMemo(() => {
         return JSON.stringify(transaction) !== JSON.stringify(editedTransaction);
@@ -62,6 +65,15 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
         'CREDIT', 'EMI', 'ENTERTAINMENT', 'FOOD & DRINKS', 'FUEL', 'GROCERIES', 
         'GROWN LOAN', 'HOUSE HOLDS', 'HOUSE RENT', 'INTEREST', 'MEDICINES', 
         'PERSONAL', 'REWARDS', 'SALARY', 'TRANSFER', 'TRAVEL', 'TRIPS', 'WIFE'
+    ];
+
+    const accounts = [
+        'HDFC  4671', 'HDFC credit 2788', 'HDFC credit 9603',
+        'ICICI  5432', 'ICICI credit 1234',
+        'IDFC  6145', 'IDFC credit 6093', 'IDFC credit 8696', 'IDFC debit 6145',
+        'HSBC  4006', 'HSBC  XXXX',
+        'Axis  7890', 'Axis credit 3456',
+        'CASH', 'CASH Spends'
     ];
 
     // Category config currently unused (dropdown shows text only); remove to avoid unused variable warning.
@@ -170,7 +182,7 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
                                 sx: {
                                     mt: 1,
                                     p: 1.5,
-                                    width: 270,
+                                    width: 330,
                                     maxHeight: 350,
                                     borderRadius: 3,
                                     overflow: 'hidden',
@@ -266,8 +278,8 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
                                         ) : (
                                             <Box
                                                 sx={{
-                                                    width: 28,
-                                                    height: 28,
+                                                    width: 30,
+                                                    height: 30,
                                                     borderRadius: '50%',
                                                     bgcolor: catConfig.bgColor,
                                                     border: `2px solid ${catConfig.color}`,
@@ -290,7 +302,7 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
                                         )}
                                         <Typography 
                                             sx={{ 
-                                                fontSize: '0.5rem', 
+                                                fontSize: '0.65rem', 
                                                 fontWeight: isSelected ? 600 : 500,
                                                 color: isSelected ? catConfig.color : 'text.primary',
                                                 textAlign: 'center',
@@ -374,50 +386,178 @@ const TransactionEdit = ({ transaction, onBack, onSave }: TransactionEditProps) 
 
             {/* Card 2: Account, Is Expense, Is Irregular (inline) */}
             <Box sx={{ bgcolor: 'background.paper', p: 2, borderRadius: 3, mb: 2, boxShadow: 'none', border: '1px solid', borderColor: 'divider', overflow: 'hidden' }}>
-                <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} justifyContent="space-between" spacing={1.5} flexWrap="wrap">
-                    {/* Account (editable) */}
-                    <Box sx={{ minWidth: 0, flex: { xs: '1 1 100%', sm: '1 1 auto' }, cursor: editingKey === 'account' ? 'auto' : 'text' }} onClick={editingKey !== 'account' ? () => setEditingKey('account') : undefined}>
-                        {editingKey === 'account' ? (
-                            <TextField
-                                fullWidth
-                                autoFocus
-                                value={editedTransaction.account}
-                                onChange={(e) => handleFieldChange('account', e.target.value)}
-                                onBlur={() => setEditingKey(null)}
-                                variant="standard"
-                                InputProps={{ disableUnderline: true, sx: { '& input': { padding: 0 } } }}
-                            />
-                        ) : (
-                            <Typography sx={{ color: 'text.primary', fontWeight: 500 }}>
+                <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-end', sm: 'center' }} justifyContent="space-between" spacing={1.5} flexWrap="wrap">
+                    {/* Account (dropdown with popover) */}
+                    <Box 
+                        sx={{ 
+                            minWidth: 0, 
+                            flex: { xs: '1 1 100%', sm: '1 1 auto' }, 
+                            cursor: 'pointer', 
+                            alignSelf: { xs: 'flex-start', sm: 'center' } 
+                        }} 
+                        onClick={(e) => setAccountAnchor(e.currentTarget)}
+                    >
+                        <Stack direction="row" spacing={1} alignItems="center">
+                            <Avatar
+                                src={accountConfig.bankLogo}
+                                alt={editedTransaction.account}
+                                imgProps={{
+                                    onError: (e) => {
+                                        e.currentTarget.style.display = 'none';
+                                    }
+                                }}
+                                sx={{
+                                    width: 45,
+                                    height: 45,
+                                    borderRadius: 1.5,
+                                    bgcolor: accountConfig.bgColor,
+                                    border: `2px solid ${accountConfig.color}`
+                                }}
+                            >
+                                {accountConfig.icon && (
+                                    <accountConfig.icon sx={{ fontSize: 18, color: accountConfig.color }} />
+                                )}
+                            </Avatar>
+                            <Typography sx={{ color: 'text.primary', fontWeight: 500, fontSize: '1rem' }}>
                                 {editedTransaction.account}
                             </Typography>
-                        )}
+                        </Stack>
                     </Box>
+
+                    {/* Account Popover */}
+                    <Popover
+                        open={Boolean(accountAnchor)}
+                        anchorEl={accountAnchor}
+                        onClose={() => setAccountAnchor(null)}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                        slotProps={{
+                            paper: {
+                                sx: {
+                                    mt: 1,
+                                    p: 1.5,
+                                    maxHeight: 400,
+                                    borderRadius: 3,
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }
+                            }
+                        }}
+                    >
+                        <Stack spacing={1} sx={{ 
+                            p:1,
+                            overflow: 'auto',
+                            '&::-webkit-scrollbar': {
+                                display: 'none'
+                            },
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
+                        }}>
+                            {accounts.map((account) => {
+                                const accConfig = getAccountConfig(account);
+                                const AccIcon = accConfig.icon;
+                                const isSelected = editedTransaction.account === account;
+                                return (
+                                    <Box
+                                        key={account}
+                                        onClick={() => {
+                                            handleFieldChange('account', account);
+                                            setAccountAnchor(null);
+                                        }}
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 1.5,
+                                            p: 1.25,
+                                            borderRadius: 2,
+                                            bgcolor: isSelected ? accConfig.bgColor : 'background.paper',
+                                            border: '1px solid',
+                                            borderColor: isSelected ? accConfig.color : 'divider',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.15s ease-in-out',
+                                            '&:hover': {
+                                                bgcolor: accConfig.bgColor,
+                                                borderColor: accConfig.color,
+                                                transform: 'translateX(2px)',
+                                            }
+                                        }}
+                                    >
+                                        <Avatar
+                                            src={accConfig.bankLogo}
+                                            alt={account}
+                                            imgProps={{
+                                                onError: (e) => {
+                                                    e.currentTarget.style.display = 'none';
+                                                }
+                                            }}
+                                            sx={{
+                                                width: 30,
+                                                height: 30,
+                                                borderRadius: 1.5,
+                                                bgcolor: accConfig.bgColor,
+                                                border: `2px solid ${accConfig.color}`
+                                            }}
+                                        >
+                                            {AccIcon && (
+                                                <AccIcon sx={{ fontSize: 16, color: accConfig.color }} />
+                                            )}
+                                        </Avatar>
+                                        <Typography 
+                                            sx={{ 
+                                                fontSize: '0.75rem', 
+                                                fontWeight: isSelected ? 600 : 500,
+                                                color: isSelected ? accConfig.color : 'text.primary',
+                                            }}
+                                        >
+                                            {account}
+                                        </Typography>
+                                    </Box>
+                                );
+                            })}
+                        </Stack>
+                    </Popover>
 
                     {/* Inline Toggles */}
                     <Stack direction="row" spacing={{ xs: 1.5, sm: 2 }} alignItems="center" flexWrap="nowrap">
-                        <Stack direction="row" spacing={0.5} alignItems="center">
-                            <Typography variant="body2" sx={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }} color={editedTransaction.expense === 'Yes' ? 'error.main' : 'text.secondary'}>
-                                Is Expense
-                            </Typography>
-                            <Switch
-                                checked={editedTransaction.expense === 'Yes'}
-                                onChange={(e) => handleFieldChange('expense', e.target.checked ? 'Yes' : 'No')}
-                                color="error"
-                                size="small"
-                            />
-                        </Stack>
-                        <Stack direction="row" spacing={0.5} alignItems="center">
-                            <Typography variant="body2" sx={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }} color={editedTransaction.irregularSpends === 'Yes' ? 'warning.main' : 'text.secondary'}>
-                                Is Irregular
-                            </Typography>
-                            <Switch
-                                checked={editedTransaction.irregularSpends === 'Yes'}
-                                onChange={(e) => handleFieldChange('irregularSpends', e.target.checked ? 'Yes' : null)}
-                                color="warning"
-                                size="small"
-                            />
-                        </Stack>
+                        {editedTransaction.type === 'DR' ? (
+                            <>
+                                <Stack direction="column" spacing={0.5} alignItems="center">
+                                    <Typography variant="body2" sx={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }} color={editedTransaction.expense === 'Yes' ? 'error.main' : 'text.secondary'}>
+                                        Is Expense
+                                    </Typography>
+                                    <Switch
+                                        checked={editedTransaction.expense === 'Yes'}
+                                        onChange={(e) => handleFieldChange('expense', e.target.checked ? 'Yes' : 'No')}
+                                        color="error"
+                                        size="small"
+                                    />
+                                </Stack>
+                                <Stack direction="column" spacing={0.5} alignItems="center">
+                                    <Typography variant="body2" sx={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }} color={editedTransaction.irregularSpends === 'Yes' ? 'warning.main' : 'text.secondary'}>
+                                        Is Irregular
+                                    </Typography>
+                                    <Switch
+                                        checked={editedTransaction.irregularSpends === 'Yes'}
+                                        onChange={(e) => handleFieldChange('irregularSpends', e.target.checked ? 'Yes' : null)}
+                                        color="warning"
+                                        size="small"
+                                    />
+                                </Stack>
+                            </>
+                        ) : (
+                            <Stack direction="column" spacing={0.5} alignItems="center">
+                                <Typography variant="body2" sx={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }} color={editedTransaction.income === 'Yes' ? 'success.main' : 'text.secondary'}>
+                                    Is Income
+                                </Typography>
+                                <Switch
+                                    checked={editedTransaction.income === 'Yes'}
+                                    onChange={(e) => handleFieldChange('income', e.target.checked ? 'Yes' : 'No')}
+                                    color="success"
+                                    size="small"
+                                />
+                            </Stack>
+                        )}
                     </Stack>
                 </Stack>
             </Box>

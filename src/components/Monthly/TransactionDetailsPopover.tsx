@@ -1,8 +1,9 @@
-import { Box, Popover, Typography, Chip, Stack, IconButton, Switch, FormControlLabel } from '@mui/material';
+import { Box, Popover, Typography, Chip, Stack, IconButton, Switch, FormControlLabel, Avatar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { TransactionDTO } from 'domain/transactions/types';
 import { currencyFormat, formatDateTime } from 'core/utils/format-functions';
 import { getCategoryConfig } from 'core/config/category-config';
+import { getAccountConfig } from 'core/config/account-config';
 
 interface TransactionDetailsPopoverProps {
     transaction: TransactionDTO | null;
@@ -17,6 +18,7 @@ const TransactionDetailsPopover = ({ transaction, anchorEl, onClose }: Transacti
 
     const categoryConfig = getCategoryConfig(transaction.category);
     const CategoryIcon = categoryConfig.icon;
+    const accountConfig = getAccountConfig(transaction.account);
 
     return (
         <Popover
@@ -106,12 +108,57 @@ const TransactionDetailsPopover = ({ transaction, anchorEl, onClose }: Transacti
 
                 {/* Account */}
                 <Box sx={{ mb: 1.5 }}>
-                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.25, fontSize: '0.7rem' }}>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5, fontSize: '0.7rem' }}>
                         Account
                     </Typography>
-                    <Typography variant="body2" fontSize="0.8rem">
-                        {transaction.account}
-                    </Typography>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        {accountConfig.bankLogo ? (
+                            <Avatar
+                                src={accountConfig.bankLogo}
+                                alt={transaction.account}
+                                imgProps={{
+                                    onError: (e) => {
+                                        e.currentTarget.style.display = 'none';
+                                    }
+                                }}
+                                sx={{ 
+                                    width: 32, 
+                                    height: 32,
+                                    borderRadius: 1.5,
+                                    bgcolor: accountConfig.bgColor,
+                                    border: `2px solid ${accountConfig.color}`,
+                                    '& img': {
+                                        objectFit: 'contain',
+                                        padding: '2px'
+                                    }
+                                }}
+                            >
+                                {accountConfig.icon && (
+                                    <accountConfig.icon sx={{ fontSize: 18, color: accountConfig.color }} />
+                                )}
+                            </Avatar>
+                        ) : (
+                            <Box
+                                sx={{
+                                    width: 24,
+                                    height: 24,
+                                    borderRadius: '50%',
+                                    bgcolor: accountConfig.bgColor,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    border: `2px solid ${accountConfig.color}`,
+                                }}
+                            >
+                                {accountConfig.icon && (
+                                    <accountConfig.icon sx={{ fontSize: 14, color: accountConfig.color }} />
+                                )}
+                            </Box>
+                        )}
+                        <Typography variant="body2" fontSize="1rem" fontWeight={500}>
+                            {transaction.account}
+                        </Typography>
+                    </Stack>
                 </Box>
 
                 {/* Transaction Flag - Conditional based on type */}
